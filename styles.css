@@ -1,0 +1,17 @@
+div {
+  color: black; }
+
+.slider {
+  position: relative;
+  margin: auto;
+  width: 540px; }
+  .slider .holder {
+    width: 50000px; }
+    .slider .holder .content-holder {
+      cursor: pointer; }
+    .slider .holder ul {
+      position: relative; }
+  .slider li {
+    display: inline-block; }
+
+/*# sourceMappingURL=styles.css.map */
