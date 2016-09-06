@@ -3,16 +3,30 @@ div {
 
 .slider {
   position: relative;
-  margin: auto;
-  width: 540px; }
+  margin: 20px auto 0 auto;
+  border-radius: 4px;
+  overflow: hidden; }
   .slider .holder {
-    width: 50000px; }
+    position: relative;
+    margin: auto;
+    overflow: hidden; }
     .slider .holder .content-holder {
-      cursor: pointer; }
-    .slider .holder ul {
-      position: relative; }
+      cursor: pointer;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      list-style: none; }
   .slider li {
-    display: inline-block; }
+    position: relative;
+    display: block;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 500px;
+    height: 368px;
+    background: #ccc;
+    text-align: center;
+    line-height: 300px; }
   .slider img {
     width: 500px;
     height: 368px; }

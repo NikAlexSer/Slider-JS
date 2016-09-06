@@ -1,5 +1,3 @@
-var preview;
-
 var Preview = function() {
     var this$ = this;
     this.arrayOfImgs = $('img');
@@ -15,18 +13,16 @@ var Preview = function() {
         this$.previewBlock.css('display', 'none');
         this$.arrayOfImgs = $('img');
         this$.arrayOfComments = $('input[type="text"]');
-        this$.slider = new Slider(this$.arrayOfImgs, this$.arrayOfComments);
+        sendValues(this$.arrayOfImgs, this$.arrayOfComments);
     })
 };
 
-function Slider(slides, comments) {
-    var this$ = this;
-    var $sliderLi =  $('.slider ul li'),
-        slideCount = $sliderLi.length,
-        slideWidth = $sliderLi.width(),
-        slideHeight = $sliderLi.height(),
-        sliderUlWidth = slideCount * slideWidth;
+function sendValues(arrSlides, arrCom) {
+    slider = new Slider(preview.arrayOfImgs, preview.arrayOfComments);
+}
 
+var Slider = function(slides, comments) {
+    var this$ = this;
     this.init = function() {
         var sourceImg   = $("#entry-template2").html(),
             templateImg = Handlebars.compile(sourceImg),
@@ -34,6 +30,15 @@ function Slider(slides, comments) {
                 comment: this$.comments};
         html = templateImg(contextImg);
         $('body').append(html);
+        this$.$sliderLi =  $('.slider li');
+        this$.$sliderImg =  $('.slider img');
+        this$.slideCount = this$.$sliderLi.length;
+        this$.slideWidth = this$.$sliderImg.width();
+        this$.slideHeight = this$.$sliderImg.height();
+        this$.sliderUlWidth = this$.slideCount * this$.slideWidth;
+        $('.holder').css({ width: this$.slideWidth, height: this$.slideHeight });
+        $('.slider ul').css({ width: this.sliderUlWidth, marginLeft: - this$.slideWidth });
+        $('.slider ul li:last-child').prependTo('.slider ul');
     };
     this.extractValues = function(slides, comments) {
         this.slides = [];
@@ -49,12 +54,19 @@ function Slider(slides, comments) {
     this.extractValues(slides, comments);
     this.init();
 
-    /*this.x = $('.content-holder');
-    this.x.on('click', function () {
-        $('.content-holder').animate({ left: '-=600'}, 700)
-        })*/
+    function moveRight() {
+        $('.slider ul').animate({
+            left: - this$.slideWidth
+        }, 800, function () {
+            $('.slider ul li:first-child').appendTo('.slider ul');
+            $('.slider ul').css('left', '');
+        });
+    }
 
-}
+    setInterval(function () {
+        moveRight();
+    }, 5000);
+};
 
 //Получение и обработка массива урлов
 function arrayInit() {
@@ -93,6 +105,8 @@ function main() {
 
 $(document).ready(function ()
 {
+    var preview,
+        slider;
     main()
 });
 

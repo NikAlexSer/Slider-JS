@@ -1,22 +1,36 @@
 $base_color: black
-$sliderWidth: 500px
 div
   color: $base_color
 
 
 .slider
   position: relative
-  margin: auto
-  width: $sliderWidth + 40
-  //overflow: hidden
+  margin: 20px auto 0 auto
+  border-radius: 4px
+  overflow: hidden
   .holder
-    width: $sliderWidth * 100
+    position: relative
+    margin: auto
+    overflow: hidden
     .content-holder
       cursor: pointer
-    ul
       position: relative
+      margin: 0
+      padding: 0
+      list-style: none
   li
-    display: inline-block
+    position: relative
+    display: block
+    float: left
+    margin: 0
+    padding: 0
+    width: 500px
+    height: 368px
+    background: #ccc
+    text-align: center
+    line-height: 300px
   img
     width: 500px
     height: 368px
+
+
