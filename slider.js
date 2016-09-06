@@ -18,11 +18,13 @@ var Preview = function() {
 };
 
 function sendValues(arrSlides, arrCom) {
-    slider = new Slider(preview.arrayOfImgs, preview.arrayOfComments);
+    slider = new Slider(arrSlides, arrCom);
 }
 
 var Slider = function(slides, comments) {
     var this$ = this;
+    this.interval = 100;
+    this.frame = 0;
     this.init = function() {
         var sourceImg   = $("#entry-template2").html(),
             templateImg = Handlebars.compile(sourceImg),
@@ -57,15 +59,32 @@ var Slider = function(slides, comments) {
     function moveRight() {
         $('.slider ul').animate({
             left: - this$.slideWidth
-        }, 800, function () {
+        }, 700, function () {
             $('.slider ul li:first-child').appendTo('.slider ul');
             $('.slider ul').css('left', '');
         });
     }
-
+    function moveLeft() {
+        $('.slider ul').animate({
+            left: + this$.slideWidth
+        }, 800, function () {
+            $('.slider ul li:last-child').prependTo('.slider ul');
+            $('.slider ul').css('left', '');
+        });
+    }
+    this.stopSlider = function() {
+        window.clearInterval(this$.interval);
+    };
     setInterval(function () {
-        moveRight();
-    }, 5000);
+            if (frame = 1) {
+                moveRight();
+            }
+            else {
+                moveLeft();
+            }
+    }, this.interval);
+
+    $('.holder').mouseenter(this.stopSlider());
 };
 
 //Получение и обработка массива урлов
