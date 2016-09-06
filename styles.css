@@ -13,5 +13,8 @@ div {
       position: relative; }
   .slider li {
     display: inline-block; }
+  .slider img {
+    width: 500px;
+    height: 368px; }
 
 /*# sourceMappingURL=styles.css.map */

@@ -30,11 +30,11 @@
                  <ul class="content-holder">
                      {{#each imgs}}
                      <li>
+                         <div>
                         {{#with ../comment}}
-
                                 <img src="{{../this}}"/>
-                                <span>{{this}}</span>
                         {{/with}}
+                         </div>
                      </li>
                      {{/each}}
                  </ul>
