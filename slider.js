@@ -1,9 +1,18 @@
 var Preview = function() {
     var this$ = this;
-    this.arrayOfImgs = $('img');
-    this.previewBlock = $('.slider-preview');
-    this.buttonDel =  $('.slider-preview input[value="Удалить"]');
-    this.buttonSave = $('.slider-preview input[value="Сохранить"]');
+    this.init = function(urlArray) {
+        var source = $("#entry-template").html(),
+            template = Handlebars.compile(source),
+            context = {urls: urlArray},
+            html = template(context);
+        $('body').append(html);
+        $('.input-form').remove();
+        this$.arrayOfImgs = $('img');
+        this$.previewBlock = $('.slider-preview');
+        this$.buttonDel =  $('.slider-preview input[value="Удалить"]');
+        this$.buttonSave = $('.slider-preview input[value="Сохранить"]');
+    };
+    this.init(urlArray);
     this.buttonDel.click( function () {
         $(this).parent().remove();
     });
@@ -49,7 +58,6 @@ var Slider = function(slides, comments) {
     this.stopSlider = function() {
         window.clearInterval(this$.interval);
     };
-
     this.init = function() {
         var sourceImg   = $("#entry-template2").html(),
             templateImg = Handlebars.compile(sourceImg),
@@ -86,7 +94,6 @@ var Slider = function(slides, comments) {
             this.comments[b] = comments[b].value
         }
     };
-
     this.extractValues(slides, comments);
     this.init();
     this.holder.mouseenter( function() {
@@ -107,40 +114,27 @@ var Slider = function(slides, comments) {
     });
 };
 
+//Передача данных из превью в слайдер
 function sendValues(arrSlides, arrCom) {
     slider = new Slider(arrSlides, arrCom);
 }
-
 //Получение и обработка массива урлов
 function arrayInit() {
     var inputVal,
         tempVal;
-
     inputVal = $("#arrayURL").val();
     tempVal = inputVal.replace('\u005B', "");                                 // удаление [
     tempVal = tempVal.replace('\u005D', "");                                  // удаление ]
     for (var x = 0; x < tempVal.length; x++) {
         tempVal = tempVal.replace('\u0022', "");                              // удаление "
     }
-    var urlArray = tempVal.split(',');
+    urlArray = tempVal.split(',');
     return urlArray;
 }
-
-//Построение по шаблону превьюх
-function buildingPreview(urlArray) {
-    var source   = $("#entry-template").html(),
-        template = Handlebars.compile(source),
-        context = {urls: urlArray},
-        html = template(context);
-    $('body').append(html);
-    $('.input-form').remove();
-}
-
 //Основная исполняемая функция
 function main() {
     $('.input-form input[name="button"]').click( function() {
         var urlArray = arrayInit();
-        buildingPreview(urlArray);
         preview = new Preview();
     });
 }
