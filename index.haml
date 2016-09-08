@@ -22,6 +22,8 @@
     %script{:id => "entry-template2", :type => "text/x-handlebars-template"}
       .slider
         .holder
+          %p{:class=>"control_next"} >>
+          %p{:class=>"control_prev"} <<
           %ul{:class=>"content-holder"}
             {{#each imgs}}
             %li

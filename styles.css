@@ -1,34 +1,57 @@
-div {
-  color: black; }
-
-.slider {
+.slider .holder {
   position: relative;
   margin: 20px auto 0 auto;
   border-radius: 4px;
   overflow: hidden; }
-  .slider .holder {
+  .slider .holder .content-holder {
+    cursor: pointer;
     position: relative;
-    margin: auto;
-    overflow: hidden; }
-    .slider .holder .content-holder {
-      cursor: pointer;
-      position: relative;
-      margin: 0;
-      padding: 0;
-      list-style: none; }
-  .slider li {
-    position: relative;
-    display: block;
-    float: left;
     margin: 0;
     padding: 0;
-    width: 500px;
-    height: 368px;
-    background: #ccc;
-    text-align: center;
-    line-height: 300px; }
-  .slider img {
-    width: 500px;
+    list-style: none;
     height: 368px; }
+.slider li {
+  position: relative;
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+  width: 500px;
+  height: 368px;
+  background: #ccc;
+  text-align: center;
+  line-height: 300px; }
+.slider img {
+  width: 500px;
+  height: 368px; }
+
+.control_prev,
+.control_next {
+  position: absolute;
+  top: 35%;
+  z-index: 999;
+  display: block;
+  padding: 4% 3%;
+  width: auto;
+  height: auto;
+  background: #2a2a2a;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  opacity: 0.8;
+  cursor: pointer; }
+
+.control_prev:hover,
+.control_next:hover {
+  opacity: 1;
+  -webkit-transition: all 0.2s ease; }
+
+.control_prev {
+  border-radius: 0 2px 2px 0; }
+
+.control_next {
+  right: 0;
+  border-radius: 2px 0 0 2px; }
 
 /*# sourceMappingURL=styles.css.map */

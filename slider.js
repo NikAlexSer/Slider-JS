@@ -17,32 +17,31 @@ var Preview = function() {
 
 var Slider = function(slides, comments) {
     var this$ = this;
-    this.frame = 0;
     //Движения влево, вправо
     var moveRight = function () {
-        $('.slider ul').animate({
+        this$.sliderUl.animate({
             left: - this$.slideWidth
         }, this$.animateTime, function () {
             $('.slider ul li:first-child').appendTo('.slider ul');
-            $('.slider ul').css('left', '');
+            this$.sliderUl.css('left', '');
         });
     };
-    this.moveLeft = function () {
-        $('.slider ul').animate({
+    var moveLeft = function () {
+        this$.sliderUl.animate({
             left: + this$.slideWidth
         }, this$.animateTime, function () {
             $('.slider ul li:last-child').prependTo('.slider ul');
-            $('.slider ul').css('left', '');
+            this$.sliderUl.css('left', '');
         });
     };
-
+    //Функция включения слайдера
     this.nextSlide = function() {
         this$.interval = window.setInterval(function() {
-            if (frame = 1) {
+            if (this$.frame == 1) {
                 moveRight();
             }
             else {
-                this$.moveLeft();
+                moveLeft();
             }
         }, this$.slideInterval);
     };
@@ -60,6 +59,10 @@ var Slider = function(slides, comments) {
         $('body').append(html);
         this$.$sliderLi =  $('.slider li');
         this$.$sliderImg =  $('.slider img');
+        this$.sliderUl = $('.slider ul');
+        this$.prev = $('.control_prev');
+        this$.next = $('.control_next');
+        this$.holder = $('.holder');
         this$.slideCount = this$.$sliderLi.length;
         this$.slideWidth = this$.$sliderImg.width();
         this$.slideHeight = this$.$sliderImg.height();
@@ -67,8 +70,9 @@ var Slider = function(slides, comments) {
         this$.interval = 0;
         this$.slideInterval = 700;
         this$.animateTime = 700;
-        $('.holder').css({ width: this$.slideWidth, height: this$.slideHeight });
-        $('.slider ul').css({ width: this.sliderUlWidth, marginLeft: - this$.slideWidth });
+        this$.frame = 1;
+        this$.holder.css({ width: this$.slideWidth, height: this$.slideHeight });
+        this$.sliderUl.css({ width: this.sliderUlWidth, marginLeft: - this$.slideWidth });
         $('.slider ul li:last-child').prependTo('.slider ul');
         this$.nextSlide();
     };
@@ -85,11 +89,21 @@ var Slider = function(slides, comments) {
 
     this.extractValues(slides, comments);
     this.init();
-    $('.content-holder').mouseenter( function() {
+    this.holder.mouseenter( function() {
         this$.stopSlider()
     });
-    $('.holder').mouseleave( function() {
+    this.holder.mouseleave( function() {
         this$.nextSlide()
+    });
+    this.prev.click(function () {
+        this$.animateTime = 100;
+        moveLeft();
+        this$.animateTime = 700;
+    });
+    this.next.click(function () {
+        this$.animateTime = 100;
+        moveRight();
+        this$.animateTime = 700;
     });
 };
 

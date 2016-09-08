@@ -1,16 +1,10 @@
 $base_color: black
-div
-  color: $base_color
-
 
 .slider
-  position: relative
-  margin: 20px auto 0 auto
-  border-radius: 4px
-  overflow: hidden
   .holder
     position: relative
-    margin: auto
+    margin: 20px auto 0 auto
+    border-radius: 4px
     overflow: hidden
     .content-holder
       cursor: pointer
@@ -18,6 +12,7 @@ div
       margin: 0
       padding: 0
       list-style: none
+      height: 368px
   li
     position: relative
     display: block
@@ -33,4 +28,4 @@ div
     width: 500px
     height: 368px
 
-
+@import _nav.sass
