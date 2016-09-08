@@ -1,54 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <script type="application/javascript" src="slider.js"></script>
-    <script type="application/javascript" src="handlebars-v4.0.5.js"></script>
-</head>
-
-<body>
-    <script id="entry-template" type="text/x-handlebars-template">
-        <div class="slider-preview">
-            {{#each urls}}
-            <div>
-                <img src="{{this}}" width="120px" />
-                <span>Comment PLZ!</span>
-                <input class=comment type="text" size="40">
-                <input name="button" type="submit" value="Удалить">
-            </div>
+<html lang='en'>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+    <title>Slider Builder</title>
+    <link href='styles.css' rel='stylesheet'>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js'></script>
+    <script src='slider.js' type='application/javascript'></script>
+    <script src='handlebars-v4.0.5.js' type='application/javascript'></script>
+  </head>
+  <body>
+    <script id='entry-template' type='text/x-handlebars-template'>
+      <div class='slider-preview'>
+        {{#each urls}}
+        <div>
+          <img src='{{this}}' width='120px'>
+          <span>Comment PLZ!</span>
+          <input class='comment' size='40' type='text'>
+          <input name='button' type='submit' value='Удалить'>
+        </div>
+        {{/each}}
+        <input name='button' type='submit' value='Сохранить'>
+      </div>
+    </script>
+    <script id='entry-template2' type='text/x-handlebars-template'>
+      <div class='slider'>
+        <div class='holder'>
+          <ul class='content-holder'>
+            {{#each imgs}}
+            <li>
+              <div>
+                {{#with ../comment}}
+                <img src='{{../this}}'>
+                {{/with}}
+              </div>
+            </li>
             {{/each}}
-            <input name="button" type="submit" value="Сохранить">
+          </ul>
         </div>
+      </div>
     </script>
-
-    <script id="entry-template2" type="text/x-handlebars-template">
-        <div class="slider">
-            <div class="holder">
-                 <ul class="content-holder">
-                     {{#each imgs}}
-                     <li>
-                         <div>
-                        {{#with ../comment}}
-                                <img src="{{../this}}"/>
-                        {{/with}}
-                         </div>
-                     </li>
-                     {{/each}}
-                 </ul>
-            </div>
-        </div>
-    </script>
-
-    <div class="input-form">
-       <label for="arrayURL"><p>Вставьте ваш массив ссылок</p></label>
-           <form>
-             <textarea id="arrayURL" rows="10" cols="50"></textarea>
-         </form>
-        <input name="button" type="submit" value="Сохранить">
+    <div class='input-form'>
+      <label for='arrayURL'>
+        <p>Вставьте ваш массив ссылок</p>
+      </label>
+      <form>
+        <textarea cols='50' id='arrayURL' rows='10'></textarea>
+      </form>
+      <input name='button' type='submit' value='Сохранить'>
     </div>
-</body>
-
+  </body>
 </html>

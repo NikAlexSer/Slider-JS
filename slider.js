@@ -4,27 +4,53 @@ var Preview = function() {
     this.previewBlock = $('.slider-preview');
     this.buttonDel =  $('.slider-preview input[value="Удалить"]');
     this.buttonSave = $('.slider-preview input[value="Сохранить"]');
-
     this.buttonDel.click( function () {
         $(this).parent().remove();
     });
-
     this.buttonSave.click( function () {
         this$.previewBlock.css('display', 'none');
         this$.arrayOfImgs = $('img');
         this$.arrayOfComments = $('input[type="text"]');
         sendValues(this$.arrayOfImgs, this$.arrayOfComments);
-    })
+    });
 };
-
-function sendValues(arrSlides, arrCom) {
-    slider = new Slider(arrSlides, arrCom);
-}
 
 var Slider = function(slides, comments) {
     var this$ = this;
-    this.interval = 100;
     this.frame = 0;
+    //Движения влево, вправо
+    var moveRight = function () {
+        $('.slider ul').animate({
+            left: - this$.slideWidth
+        }, this$.animateTime, function () {
+            $('.slider ul li:first-child').appendTo('.slider ul');
+            $('.slider ul').css('left', '');
+        });
+    };
+    this.moveLeft = function () {
+        $('.slider ul').animate({
+            left: + this$.slideWidth
+        }, this$.animateTime, function () {
+            $('.slider ul li:last-child').prependTo('.slider ul');
+            $('.slider ul').css('left', '');
+        });
+    };
+
+    this.nextSlide = function() {
+        this$.interval = window.setInterval(function() {
+            if (frame = 1) {
+                moveRight();
+            }
+            else {
+                this$.moveLeft();
+            }
+        }, this$.slideInterval);
+    };
+    //функция остановки
+    this.stopSlider = function() {
+        window.clearInterval(this$.interval);
+    };
+
     this.init = function() {
         var sourceImg   = $("#entry-template2").html(),
             templateImg = Handlebars.compile(sourceImg),
@@ -38,9 +64,13 @@ var Slider = function(slides, comments) {
         this$.slideWidth = this$.$sliderImg.width();
         this$.slideHeight = this$.$sliderImg.height();
         this$.sliderUlWidth = this$.slideCount * this$.slideWidth;
+        this$.interval = 0;
+        this$.slideInterval = 700;
+        this$.animateTime = 700;
         $('.holder').css({ width: this$.slideWidth, height: this$.slideHeight });
         $('.slider ul').css({ width: this.sliderUlWidth, marginLeft: - this$.slideWidth });
         $('.slider ul li:last-child').prependTo('.slider ul');
+        this$.nextSlide();
     };
     this.extractValues = function(slides, comments) {
         this.slides = [];
@@ -55,37 +85,17 @@ var Slider = function(slides, comments) {
 
     this.extractValues(slides, comments);
     this.init();
-
-    function moveRight() {
-        $('.slider ul').animate({
-            left: - this$.slideWidth
-        }, 700, function () {
-            $('.slider ul li:first-child').appendTo('.slider ul');
-            $('.slider ul').css('left', '');
-        });
-    }
-    function moveLeft() {
-        $('.slider ul').animate({
-            left: + this$.slideWidth
-        }, 800, function () {
-            $('.slider ul li:last-child').prependTo('.slider ul');
-            $('.slider ul').css('left', '');
-        });
-    }
-    this.stopSlider = function() {
-        window.clearInterval(this$.interval);
-    };
-    setInterval(function () {
-            if (frame = 1) {
-                moveRight();
-            }
-            else {
-                moveLeft();
-            }
-    }, this.interval);
-
-    $('.holder').mouseenter(this.stopSlider());
+    $('.content-holder').mouseenter( function() {
+        this$.stopSlider()
+    });
+    $('.holder').mouseleave( function() {
+        this$.nextSlide()
+    });
 };
+
+function sendValues(arrSlides, arrCom) {
+    slider = new Slider(arrSlides, arrCom);
+}
 
 //Получение и обработка массива урлов
 function arrayInit() {
@@ -108,7 +118,6 @@ function buildingPreview(urlArray) {
         template = Handlebars.compile(source),
         context = {urls: urlArray},
         html = template(context);
-
     $('body').append(html);
     $('.input-form').remove();
 }
@@ -128,7 +137,6 @@ $(document).ready(function ()
         slider;
     main()
 });
-
 
 /*
  [
