@@ -1,0 +1,23 @@
+{
+  "name": "sliderjs",
+  "version": "1.0.0",
+  "description": "Simple javascript slider with using Haml, Sass, Handlebars",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NikAlexSer/Slider-JS.git"
+  },
+  "author": "NikAlexSer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NikAlexSer/Slider-JS/issues"
+  },
+  "homepage": "https://github.com/NikAlexSer/Slider-JS#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-util": "^3.0.7"
+  }
+}
