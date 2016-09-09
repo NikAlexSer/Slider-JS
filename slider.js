@@ -26,6 +26,7 @@ var Preview = function() {
 
 var Slider = function(slides, comments) {
     var this$ = this;
+    this.templateArr =  [];
     //Движения влево, вправо
     var moveRight = function () {
         this$.sliderUl.animate({
@@ -61,8 +62,7 @@ var Slider = function(slides, comments) {
     this.init = function() {
         var sourceImg   = $("#entry-template2").html(),
             templateImg = Handlebars.compile(sourceImg),
-            contextImg = {imgs: this$.slides,
-                comment: this$.comments};
+            contextImg = {slidesTemp: this$.templateArr };
         html = templateImg(contextImg);
         $('body').append(html);
         this$.$sliderLi =  $('.slider li');
@@ -76,7 +76,7 @@ var Slider = function(slides, comments) {
         this$.slideHeight = this$.$sliderImg.height();
         this$.sliderUlWidth = this$.slideCount * this$.slideWidth;
         this$.interval = 0;
-        this$.slideInterval = 700;
+        this$.slideInterval = 5000;
         this$.animateTime = 700;
         this$.frame = 1;
         this$.holder.css({ width: this$.slideWidth, height: this$.slideHeight });
@@ -92,6 +92,9 @@ var Slider = function(slides, comments) {
         this.comments = [];
         for (var b = 0; b < comments.length; b++) {
             this.comments[b] = comments[b].value
+        }
+        for (var c = 0; c < this.slides.length; c++) {
+            this$.templateArr[c] = {img: this.slides[c], comment: this.comments[c]}
         }
     };
     this.extractValues(slides, comments);
