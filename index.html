@@ -28,12 +28,13 @@
           <p class='control_next'>>></p>
           <p class='control_prev'><<</p>
           <ul class='content-holder'>
-            {{#each imgs}}
+            {{#each slidesTemp}}
             <li>
               <div>
-                {{#with ../comment}}
-                <img src='{{../this}}'>
-                {{/with}}
+                <img src='{{img}}'>
+                {{#if comment}}
+                <span class='comment'>{{comment}}</span>
+                {{/if}}
               </div>
             </li>
             {{/each}}

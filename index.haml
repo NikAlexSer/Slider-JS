@@ -25,12 +25,13 @@
           %p{:class=>"control_next"} >>
           %p{:class=>"control_prev"} <<
           %ul{:class=>"content-holder"}
-            {{#each imgs}}
+            {{#each slidesTemp}}
             %li
               %div
-                {{#with ../comment}}
-                %img{:src=>"{{../this}}"}
-                {{/with}}
+                %img{:src=>"{{img}}"}
+                {{#if comment}}
+                %span{:class=>"comment"} {{comment}}
+                {{/if}}
             {{/each}}
 
     .input-form
