@@ -8,7 +8,7 @@
     %script{:src => "slider.js", :type => "application/javascript"}
     %script{:src => "handlebars-v4.0.5.js", :type => "application/javascript"}
   %body
-    %script{:id => "entry-template", :type => "text/x-handlebars-template"}
+    %script{:id => "preview-template", :type => "text/x-handlebars-template"}
       .slider-preview
         {{#each urls}}
         %div
@@ -19,7 +19,7 @@
         {{/each}}
         %input{:name => "button", :type => "submit", :value => "Сохранить"}
 
-    %script{:id => "entry-template2", :type => "text/x-handlebars-template"}
+    %script{:id => "slider-template", :type => "text/x-handlebars-template"}
       .slider
         .holder
           %p{:class=>"control_next"} >>

@@ -1,7 +1,7 @@
 var Preview = function() {
     var this$ = this;
     this.init = function(urlArray) {
-        var source = $("#entry-template").html(),
+        var source = $("#preview-template").html(),
             template = Handlebars.compile(source),
             context = {urls: urlArray},
             html = template(context);
@@ -60,7 +60,7 @@ var Slider = function(slides, comments) {
         window.clearInterval(this$.interval);
     };
     this.init = function() {
-        var sourceImg   = $("#entry-template2").html(),
+        var sourceImg   = $("#slider-template").html(),
             templateImg = Handlebars.compile(sourceImg),
             contextImg = {slidesTemp: this$.templateArr };
         html = templateImg(contextImg);
@@ -76,7 +76,7 @@ var Slider = function(slides, comments) {
         this$.slideHeight = this$.$sliderImg.height();
         this$.sliderUlWidth = this$.slideCount * this$.slideWidth;
         this$.interval = 0;
-        this$.slideInterval = 5000;
+        this$.slideInterval = 2000;
         this$.animateTime = 700;
         this$.frame = 1;
         this$.holder.css({ width: this$.slideWidth, height: this$.slideHeight });
