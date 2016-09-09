@@ -1,4 +1,13 @@
 $base_color: black
+$slide_width: 500px
+$slide_height: 368px
+$slide_comment_height: 80px
+
+=glide($time)
+  -webkit-transition: all $time ease
+  -moz-transition: all $time ease
+  -o-transition: all $time ease
+  transition: all $time ease
 
 .slider
   .holder
@@ -7,25 +16,48 @@ $base_color: black
     border-radius: 4px
     overflow: hidden
     .content-holder
-      cursor: pointer
+      cursor: default
       position: relative
       margin: 0
       padding: 0
       list-style: none
-      height: 368px
+      height: $slide_height
+      div
+        height: $slide_height
   li
     position: relative
     display: block
     float: left
     margin: 0
     padding: 0
-    width: 500px
+    width: $slide_width
     height: 368px
     background: #ccc
     text-align: center
     line-height: 300px
   img
-    width: 500px
-    height: 368px
+    width: $slide_width
+    height: $slide_height
+  .comment
+    cursor: default
+    font-family: "Open Sans"
+    font-size: 14pt
+    padding: 0
+    margin: 0
+    display: block
+    width: $slide_width
+    height: $slide_comment_height
+    position: absolute
+    bottom: 0px
+    color: #fff
+    background: #2a2a2a
+    opacity: 0.4
+    +glide(0.7s)
+    line-height: 80px
+    text-align: center
+    vertical-align: middle
+  .comment:hover
+    opacity: 1.0
+    +glide(0.7s)
 
 @import _nav.sass
