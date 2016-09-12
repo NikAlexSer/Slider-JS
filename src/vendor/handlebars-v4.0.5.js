@@ -388,7 +388,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return escape[chr];
 	}
 
-	function extend(obj /* , ...source */) {
+	function extend(obj /* , ...src */) {
 	  for (var i = 1; i < arguments.length; i++) {
 	    for (var key in arguments[i]) {
 	      if (Object.prototype.hasOwnProperty.call(arguments[i], key)) {
@@ -3352,7 +3352,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  appendToBuffer: function appendToBuffer(source, location, explicit) {
-	    // Force a source as this simplifies the merge logic.
+	    // Force a src as this simplifies the merge logic.
 	    if (!_utils.isArray(source)) {
 	      source = [source];
 	    }
@@ -3530,7 +3530,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // Generate minimizer alias mappings
 	    //
 	    // When using true SourceNodes, this will update all references to the given alias
-	    // as the source nodes are reused in situ. For the non-source node compilation mode,
+	    // as the src nodes are reused in situ. For the non-src node compilation mode,
 	    // aliases will not be used, but this case is already being run on the client and
 	    // we aren't concern about minimizing the template size.
 	    var aliasCount = 0;
@@ -4397,7 +4397,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	(function () {
-	  var reservedWords = ('break else new var' + ' case finally return void' + ' catch for switch while' + ' continue function this with' + ' default if throw' + ' delete in try' + ' do instanceof typeof' + ' abstract enum int short' + ' boolean export interface static' + ' byte extends long super' + ' char final native synchronized' + ' class float package throws' + ' const goto private transient' + ' debugger implements protected volatile' + ' double import public let yield await' + ' null true false').split(' ');
+	  var reservedWords = ('break else new var' + ' case finally return void' + ' catch for switch while' + ' continue function this with' + ' default if throw' + ' delete in try' + ' do instanceof typeof' + ' abstract enum int short' + ' boolean export interface static' + ' byte extends long super' + ' char final native synchronized' + ' class float package throws' + ' const goto private transient' + ' debugger implements protected volatile' + ' double import build let yield await' + ' null true false').split(' ');
 
 	  var compilerWords = JavaScriptCompiler.RESERVED_WORDS = {};
 
@@ -4449,8 +4449,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /* istanbul ignore next */
 	  if (false) {
 	    // We don't support this in AMD environments. For these environments, we asusme that
-	    // they are running on the browser and thus have no need for the source-map library.
-	    var SourceMap = require('source-map');
+	    // they are running on the browser and thus have no need for the src-map library.
+	    var SourceMap = require('src-map');
 	    SourceNode = SourceMap.SourceNode;
 	  }
 	} catch (err) {}
