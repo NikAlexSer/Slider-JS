@@ -16,7 +16,8 @@ var path = {
     build: { //Тут мы укажем куда складывать готовые после сборки файлы
         html: '../build/',
         js: '../build/',
-        css: '../build/'
+        css: '../build/',
+        vendor: '../build/'
     },
     src: { //Пути откуда брать исходники
         html: '../src/*.html', 
@@ -57,7 +58,7 @@ gulp.task('style:build', function () {
 
 gulp.task('vendor:build', function () {
     gulp.src(path.src.vendor)
-        .pipe(gulp.dest(path.build.css));
+        .pipe(gulp.dest(path.build.vendor));
 });
 
 gulp.task('build', [
