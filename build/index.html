@@ -5,7 +5,9 @@
     <title>Slider Builder</title>
     <link href='styles.css' rel='stylesheet'>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js'></script>
-    <script src='slider.js' type='application/javascript'></script>
+    <script src='./js/main.js' type='application/javascript'></script>
+    <script src='./js/slider.js' type='application/javascript'></script>
+    <script src='./js/preview.js' type='application/javascript'></script>
     <script src='handlebars-v4.0.5.js' type='application/javascript'></script>
   </head>
   <body>
@@ -13,7 +15,7 @@
       <div class='slider-preview'>
         {{#each urls}}
         <div>
-          <img src='{{this}}' width='120px'>
+          <img src='{{this}}'>
           <span>Comment PLZ!</span>
           <input class='comment' size='40' type='text'>
           <input name='button' type='submit' value='Удалить'>

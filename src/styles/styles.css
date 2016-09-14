@@ -1,3 +1,6 @@
+.slider-preview img {
+  width: 120px; }
+
 .slider .holder {
   position: relative;
   margin: 20px auto 0 auto;
