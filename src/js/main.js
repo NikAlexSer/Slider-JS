@@ -1,41 +1,20 @@
 //Передача данных из превью в слайдер
-function sendValues(slides, comments) {
-    extractValues(slides, comments);
+function restructValues(slides, comments) {
+    var arrayOfObject = [];
+    slides.forEach(function(item, i, slides) {
+        arrayOfObject[i] = {img: slides[i], com: comments[i]};
+    });
+    //console.log(arrayOfObject);
+    //console.log(arrayOfObject[1].img);
     var slider = new Slider(slides, comments);
     return slider;
-}
-function extractValues(slides, comments){
-    slides.forEach(function (i, slides) {
-        if ( slides[i] !== '' ) {}
-        else {
-            slides[i].splice(i, 1);
-        }
-    });
-    comments.forEach(function (j, comments) {
-        comments[j] = comments[j].value;
-    });
-}
-//Получение и обработка массива урлов
-function arrayInit() {
-    urlArray = $('#arrayURL').val().split(',');
-    urlArray.forEach(function (item, i, urlArray) {
-        urlArray[i] = urlArray[i].replace( /"/g, '');
-        urlArray[i] = urlArray[i].replace('\u005B', '');
-        urlArray[i] = urlArray[i].replace('\u005D', '');
-    });
-    return urlArray;
-    /*
-    urlArray = urlArray.replace( /"/g, '');
-    urlArray = urlArray.replace('\u005B', '');
-    urlArray = urlArray.replace('\u005D', '');
-    return urlArray.split(',');*/
 }
 //Основная исполняемая функция
 function main() {
     $('.input-form input[name="button"]').click( function() {
-        urlArray = arrayInit();
         var preview = new Preview();
-        return preview;
+        preview.init();
+        preview.render();
     });
 }
 //Вызоп основной функции после загрузки страницы

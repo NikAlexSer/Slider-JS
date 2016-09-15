@@ -1,36 +1,81 @@
 var Preview = function() {
-    var source,
-        template,
-        context,
-        htmlPreview,
-        previewTemplateInit = function () {
-            source = $("#preview-template").html();
-            template = Handlebars.compile(source);
-        },
-        previewTemplateInsertData = function (urlArray) {
-            context = {urls: urlArray};
-            htmlPreview = template(context);
+    var arrayInit = function() {
+        /*
+         Добавил еще два реплейса для полной чистоты урлов.
+         Регулярное выражение для исключения прерывания
+         при первом нахождении символа в элементе
+         */
+        var urlArray = $('#arrayURL').val().split(',');
+        urlArray.forEach(function (item, i, urlArray) {
+            urlArray[i] = urlArray[i].replace(/"/g, '');
+            urlArray[i] = urlArray[i].replace(/\n/g, '');
+            urlArray[i] = urlArray[i].replace(/ /g, '');
+            urlArray[i] = urlArray[i].replace('\u005B', '');
+            urlArray[i] = urlArray[i].replace('\u005D', '');
+        });
+        //console.log(urlArray);
+        return urlArray;
+    },
+        buildPreview = (function () {
+        var source,
+            template,
+            context,
+            htmlPreview;
+        return {
+            _previewTemplateInit: function () {
+                source = $("#preview-template").html();
+                template = Handlebars.compile(source);
+            },
+            _previewTemplateInsertData: function (urlArray) {
+                context = {urls: urlArray};
+                htmlPreview = template(context);
+                console.log(context);
+            },
+            _previewTemplateBuild: function () {
+                $('body').append(htmlPreview);
+            }
         };
-    this.init = function(urlArray) {
-        previewTemplateInit();
-        previewTemplateInsertData(urlArray);
-        $('body').append(htmlPreview);
-        $('.input-form').hide();
-    };
-    this.init(urlArray);
-    var arrayOfImgs = urlArray,
-        $arrayOfComments = $('input[type="text"]'),
-        $previewBlock = $('.slider-preview'),
-        $buttonDel =  $('.slider-preview input[value="Удалить"]'),
-        $buttonSave = $('.slider-preview input[value="Сохранить"]');
-    $buttonDel.click( function () {
-        $(this).parent().hide();
-        arrayOfImgs.splice($(this).parent().index(), 1, '');
-        console.log(arrayOfImgs);
-        $arrayOfComments.splice(($(this).parent().index()), 1, '');
-    });
-    $buttonSave.click( function () {
+    }()), //модуль
+        urlArray = [],
+        arrayOfImages = [],
+        arrayOfComments = [],
+        $this= this,
+        $previewBlock,
+        $buttonDel,
+        $buttonSave;
+    function deleteContent() {
+        /*
+         $(this) потому что parent() применяется к объекту Jquery,
+         а $(this) дает такой объект в контексте нажимаемой кнопки
+         */
+       // $(this).parent().hide();
+        $(this).parent().parent().html('');
+        arrayOfImages.splice($(this).parent().index(), 1);
+        //buildPreview._previewTemplateInsertData(arrayOfImages);
+        //buildPreview.previewTemplateReBuild();
+        $this.render();
+        console.log(arrayOfImages);
+    }
+    function saveContent() {
+        $('.comment').each(function (i) {
+            arrayOfComments[i] = $('.comment')[i].value;
+        });
         $previewBlock.hide();
-        sendValues(arrayOfImgs, $arrayOfComments);
-    });
+        restructValues(arrayOfImages, arrayOfComments);
+    }
+    this.init = function(){
+        arrayOfImages = urlArray = arrayInit();
+        console.log(urlArray);
+        $('.input-form').hide();
+        buildPreview._previewTemplateInit();
+    };
+    this.render = function() {
+        buildPreview._previewTemplateInsertData(arrayOfImages);
+        buildPreview._previewTemplateBuild();
+        $previewBlock = $('.slider-preview');
+        $buttonDel =  $('.slider-preview input[value="Удалить"]');
+        $buttonSave = $('.slider-preview input[value="Сохранить"]');
+        $buttonDel.on("click", deleteContent);
+        $buttonSave.on("click", saveContent);
+    };
 };
