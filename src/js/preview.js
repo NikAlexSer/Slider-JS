@@ -72,9 +72,9 @@ var Preview = function() {
     this.render = function() {
         buildPreview._previewTemplateInsertData(arrayOfImages);
         buildPreview._previewTemplateBuild();
-        $previewBlock = $('.slider-preview');
-        $buttonDel =  $('.slider-preview input[value="Удалить"]');
-        $buttonSave = $('.slider-preview input[value="Сохранить"]');
+        $previewBlock = $('.js-slider-preview');
+        $buttonDel =  $('.js-slider-preview input[value="Удалить"]');
+        $buttonSave = $('.js-slider-preview input[value="Сохранить"]');
         $buttonDel.on("click", deleteContent);
         $buttonSave.on("click", saveContent);
     };
