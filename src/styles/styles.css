@@ -5,7 +5,8 @@
   position: relative;
   margin: 20px auto 0 auto;
   border-radius: 4px;
-  overflow: hidden; }
+  overflow: hidden;
+  width: 500px; }
   .slider .holder .content-holder {
     cursor: default;
     position: relative;
@@ -57,8 +58,8 @@
     -o-transition: all 0.7s ease;
     transition: all 0.7s ease; }
 
-.control_prev,
-.control_next {
+.control-prev,
+.control-next {
   position: absolute;
   top: 35%;
   z-index: 999;
@@ -73,16 +74,22 @@
   font-size: 18px;
   opacity: 0.8;
   cursor: pointer; }
-  .control_prev:hover,
-  .control_next:hover {
+  .control-prev:hover,
+  .control-next:hover {
     opacity: 1;
     -webkit-transition: all 0.2s ease; }
 
-.control_prev {
+.control-prev {
   border-radius: 0 2px 2px 0; }
 
-.control_next {
+.control-next {
   right: 0;
   border-radius: 2px 0 0 2px; }
+
+.content-holder {
+  -webkit-transition: all 0.3s cubic-bezier(1, 0.01, 0.32, 1);
+  -moz-transition: all 0.3s cubic-bezier(1, 0.01, 0.32, 1);
+  -o-transition: all 0.3s cubic-bezier(1, 0.01, 0.32, 1);
+  transition: all 0.3s cubic-bezier(1, 0.01, 0.32, 1); }
 
 /*# sourceMappingURL=styles.css.map */
