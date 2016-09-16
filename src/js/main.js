@@ -1,15 +1,8 @@
-//Передача данных из превью в слайдер
-function restructValues(slides, comments) {
-    var arrayOfObject = [];
-    slides.forEach(function(item, i, slides) {
-        arrayOfObject[i] = {img: slides[i], com: comments[i]};
-    });
-    //console.log(arrayOfObject);
-    //console.log(arrayOfObject[1].img);
-    var slider = new Slider(slides, comments);
-    return slider;
+function sendValues(arraySlides) {
+    var slider = new Slider(arraySlides);
+    slider.init();
+    slider.render();
 }
-//Основная исполняемая функция
 function main() {
     $('.input-form input[name="button"]').click( function() {
         var preview = new Preview();
@@ -17,9 +10,7 @@ function main() {
         preview.render();
     });
 }
-//Вызоп основной функции после загрузки страницы
-$(document).ready(function ()
-{
+$(document).ready(function () {
     main();
 });
 

@@ -1,37 +1,20 @@
 var Preview = function() {
-    var arrayInit = function() {
-        /*
-         Добавил еще два реплейса для полной чистоты урлов.
-         Регулярное выражение для исключения прерывания
-         при первом нахождении символа в элементе
-         */
-        var urlArray = $('#arrayURL').val().split(',');
-        urlArray.forEach(function (item, i, urlArray) {
-            urlArray[i] = urlArray[i].replace(/"/g, '');
-            urlArray[i] = urlArray[i].replace(/\n/g, '');
-            urlArray[i] = urlArray[i].replace(/ /g, '');
-            urlArray[i] = urlArray[i].replace('\u005B', '');
-            urlArray[i] = urlArray[i].replace('\u005D', '');
-        });
-        //console.log(urlArray);
-        return urlArray;
-    },
-        buildPreview = (function () {
+    var buildPreview = (function() {
         var source,
             template,
             context,
             htmlPreview;
         return {
-            _previewTemplateInit: function () {
+            pv_templateInit: function() {
                 source = $("#preview-template").html();
                 template = Handlebars.compile(source);
             },
-            _previewTemplateInsertData: function (urlArray) {
+            pv_templateInsertData: function(urlArray) {
                 context = {urls: urlArray};
                 htmlPreview = template(context);
                 console.log(context);
             },
-            _previewTemplateBuild: function () {
+            pv_templateBuild: function() {
                 $('body').append(htmlPreview);
             }
         };
@@ -39,43 +22,63 @@ var Preview = function() {
         urlArray = [],
         arrayOfImages = [],
         arrayOfComments = [],
-        $this= this,
+        arraySlides = [],
+        $this = this,
         $previewBlock,
         $buttonDel,
         $buttonSave;
-    function deleteContent() {
+    function _arrayInit() {
+            /*
+             Добавил еще два реплейса для полной чистоты урлов.
+             Регулярное выражение для исключения прерывания
+             при первом нахождении символа в элементе
+             */
+            var urlArray = $('#arrayURL').val().split(',');
+            urlArray.forEach(function (item, i, urlArray) {
+                urlArray[i] = urlArray[i].replace(/"/g, '');
+                urlArray[i] = urlArray[i].replace(/\n/g, '');
+                urlArray[i] = urlArray[i].replace(/ /g, '');
+                urlArray[i] = urlArray[i].replace('\u005B', '');
+                urlArray[i] = urlArray[i].replace('\u005D', '');
+            });
+            //console.log(urlArray);
+            return urlArray;
+        }
+    function _extractValues(slides, comments) {
+        slides.forEach(function(item, i, slides) {
+            arraySlides[i] = {img: slides[i], com: comments[i]};
+        });
+    }
+    function _deleteContent() {
         /*
          $(this) потому что parent() применяется к объекту Jquery,
          а $(this) дает такой объект в контексте нажимаемой кнопки
          */
-       // $(this).parent().hide();
-        $(this).parent().parent().html('');
         arrayOfImages.splice($(this).parent().index(), 1);
-        //buildPreview._previewTemplateInsertData(arrayOfImages);
-        //buildPreview.previewTemplateReBuild();
         $this.render();
-        console.log(arrayOfImages);
     }
-    function saveContent() {
+    function _saveContent() {
         $('.comment').each(function (i) {
             arrayOfComments[i] = $('.comment')[i].value;
         });
         $previewBlock.hide();
-        restructValues(arrayOfImages, arrayOfComments);
+        _extractValues(arrayOfImages, arrayOfComments);
+        sendValues(arraySlides);
     }
     this.init = function(){
-        arrayOfImages = urlArray = arrayInit();
+        arrayOfImages = urlArray = _arrayInit();
         console.log(urlArray);
         $('.input-form').hide();
-        buildPreview._previewTemplateInit();
+        buildPreview.pv_templateInit();
     };
     this.render = function() {
-        buildPreview._previewTemplateInsertData(arrayOfImages);
-        buildPreview._previewTemplateBuild();
+        $('.js-slider-preview').remove(); //удаление старых/пустых превьюх перед рендером
+        buildPreview.pv_templateInsertData(arrayOfImages);
+        buildPreview.pv_templateBuild();
         $previewBlock = $('.js-slider-preview');
         $buttonDel =  $('.js-slider-preview input[value="Удалить"]');
         $buttonSave = $('.js-slider-preview input[value="Сохранить"]');
-        $buttonDel.on("click", deleteContent);
-        $buttonSave.on("click", saveContent);
+        $buttonDel.on("click", _deleteContent);
+        $buttonSave.on("click", _saveContent);
     };
 };
