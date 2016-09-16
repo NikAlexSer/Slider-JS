@@ -15,21 +15,21 @@ var gulp = require('gulp'),
 var path = {
     build: { //Тут мы укажем куда складывать готовые после сборки файлы
         html: '../build/',
-        js: '../build/',
-        css: '../build/',
+        js: '../build/js/',
+        css: '../build/styles/',
         vendor: '../build/'
     },
     src: { //Пути откуда брать исходники
         html: '../src/*.html', 
-        js: '../src/*.js',
-        style: '../src/styles.sass',
-        vendor: '../src/vendor/*.js'
+        js: '../src/js/*.js',
+        style: '../src/styles/styles.sass',
+        vendor: '../src/*.js'
     },
     watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
         html: '../src/*.html',
-        js: '../src/*.js',
-        style: '../src/*.sass',
-        vendor: '../src/vendor/*.js'
+        js: '../src/js/*.js',
+        style: '../src/styles/*.sass',
+        vendor: '../src/*.js'
     }
 };
 
