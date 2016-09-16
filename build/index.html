@@ -12,7 +12,7 @@
   </head>
   <body>
     <script id='preview-template' type='text/x-handlebars-template'>
-      <div class='js-slider-preview'>
+      <div class='js-slider-preview slider-preview'>
         {{#each urls}}
         <div>
           <img src='{{this}}'>
@@ -27,8 +27,8 @@
     <script id='slider-template' type='text/x-handlebars-template'>
       <div class='slider'>
         <div class='holder'>
-          <p class='control_next'>>></p>
-          <p class='control_prev'><<</p>
+          <p class='control-next'>>></p>
+          <p class='control-prev'><<</p>
           <ul class='content-holder'>
             {{#each slidesTemp}}
             <li>

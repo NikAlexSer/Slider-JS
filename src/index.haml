@@ -11,7 +11,7 @@
     %script{:src => "handlebars-v4.0.5.js", :type => "application/javascript"}
   %body
     %script{:id => "preview-template", :type => "text/x-handlebars-template"}
-      .js-slider-preview
+      .js-slider-preview.slider-preview
         {{#each urls}}
         %div
           %img{:src =>"{{this}}"}
@@ -24,8 +24,8 @@
     %script{:id => "slider-template", :type => "text/x-handlebars-template"}
       .slider
         .holder
-          %p.control_next >>
-          %p.control_prev <<
+          %p.control-next >>
+          %p.control-prev <<
           %ul.content-holder
             {{#each slidesTemp}}
             %li
