@@ -3,7 +3,12 @@ var Slider = function(arraySlides) {
         index,
         totalSlides,
         autoSlider,
-        sliderWidth;
+        sliderWidth,
+        $next,
+        $prev,
+        $slide,
+        $bullets,
+        $holder;
     var buildSlider = (function() {
         var sourceSlides,
             templateSlides,
@@ -29,71 +34,71 @@ var Slider = function(arraySlides) {
     this.render = function() {
         buildSlider.sd_templateInsertData(arraySlides);
         buildSlider.sd_templateBuild();
-        sliderControl._enterWidth();
-
+        $next = $('.control-next');
+        $prev =  $('.control-prev');
+        $slide = $('.js-content-holder li');
+        $holder = $('.js-content-holder');
+        $bullets = $('.js-nav span');
         $('.js-nav span:first-child').addClass('on');
-        $('.js-content-holder').addClass('animated');
-        sliderControl._eventsCheck();
-        sliderControl._start();
+        $holder.addClass('animated');
+        _enterWidth();
+        _eventsCheck();
+        _startSlider();
     };
-    var sliderControl = (function() {
-        return {
-            _start: function() {
-                clearInterval(autoSlider);
-                autoSlider = setInterval(function () {
-                    sliderControl._moveSlide(1);
-                }, 3000);
-            },
-            _enterWidth: function() {
-                totalSlides = $('.js-content-holder li').length;
-                sliderWidth = $('.js-content-holder img').width();
-                $('.js-content-holder').css({width: sliderWidth * totalSlides});
-            },
-            _moveSlide: function(direction) {
-                $('.on').removeClass('on');
-                if (direction === 1) {
-                    pos++;
-                    if (pos === totalSlides) {
-                        pos = 0;
-                    }
-                    $('.js-content-holder').css({left: -(sliderWidth*(pos))});
-                    index = +$('.js-content-holder li').eq(pos).data('number');
-                    $('.js-nav span').eq(index).addClass('on');
-                }
-                else {
-                    pos--;
-                    if (pos === -1){
-                        pos = totalSlides - 1;
-                    }
-                    $('.js-content-holder').css({left: -(sliderWidth*(pos))});
-                    index = +$('.js-content-holder li').eq(pos).data('number');
-                    $('.js-nav span').eq(index).addClass('on');
-                }
-            },
-            _eventsCheck: function() {
-                $('.control-next').on('click', (function() {
-                    sliderControl._moveSlide(1);
-                }));
-                $('.control-prev').on('click', (function() {
-                    sliderControl._moveSlide();
-                }));
-                $('.js-content-holder li')
-                    .add($('.control-prev'))
-                    .add($('.control-next'))
-                    .add($('.js-nav span')).on('mouseenter', function() {
-                    clearInterval(autoSlider);
-                });
-                $('.js-content-holder li')
-                    .add($('.control-prev'))
-                    .add($('.control-next')).on('mouseleave', function() {
-                        sliderControl._start();
-                });
-                $('.js-nav span').on('click', function() {
-                    pos = $(this).index() - 1;
-                    clearInterval(autoSlider);
-                    sliderControl._moveSlide(1);
-                });
+    function _startSlider() {
+        clearInterval(autoSlider);
+        autoSlider = setInterval(function () {
+            sliderControl._moveSlide(1);
+        }, 3000);
+    };
+    function _enterWidth() {
+        totalSlides =  $slide.length;
+        sliderWidth = $('.js-content-holder img').width();
+        $holder.css({width: sliderWidth * totalSlides});
+    };
+    function _moveSlide(direction) {
+        $('.on').removeClass('on');
+        if (direction === 1) {
+            pos++;
+            if (pos === totalSlides) {
+                pos = 0;
             }
-        };
-    }()); //модуль
+            $holder.css({left: -(sliderWidth*(pos))});
+            index = +$slide.eq(pos).data('number');
+            $('.js-nav span').eq(index).addClass('on');
+        }
+        else {
+            pos--;
+            if (pos === -1){
+                pos = totalSlides - 1;
+            }
+            $holder.css({left: -(sliderWidth*(pos))});
+            index = +$slide.eq(pos).data('number');
+            $bullets.eq(index).addClass('on');
+        }
+    };
+    function _eventsCheck() {
+        $next.on('click', (function() {
+            _moveSlide(1);
+        }));
+        $prev.on('click', (function() {
+            _moveSlide();
+        }));
+        $slide
+            .add($prev)
+            .add($next)
+            .add($bullets).on('mouseenter', function() {
+            clearInterval(autoSlider);
+        });
+        $slide
+            .add($prev)
+            .add($next).on('mouseleave', function() {
+            _startSlider();
+        });
+        $bullets.on('click', function() {
+            pos = $(this).index() - 1;
+            clearInterval(autoSlider);
+            _moveSlide(1);
+        });
+    };
 };
