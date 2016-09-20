@@ -11,13 +11,22 @@
     <script src='handlebars-v4.0.5.js' type='application/javascript'></script>
   </head>
   <body>
+    <div class='input-form'>
+      <label for='arrayURL'>
+        <p>Вставьте ваш массив ссылок</p>
+      </label>
+      <form>
+        <textarea cols='50' id='arrayURL' rows='10'></textarea>
+      </form>
+      <input name='button' type='submit' value='Сохранить'>
+    </div>
     <script id='preview-template' type='text/x-handlebars-template'>
       <div class='js-slider-preview slider-preview'>
         {{#each urls}}
         <div>
           <img src='{{this}}'>
           <span>Comment PLZ!</span>
-          <input class='comment' size='40' type='text'>
+          <input class='comment' size='40' type='text' value='{{@index}}'>
           <input name='button' type='submit' value='Удалить'>
         </div>
         {{/each}}
@@ -29,34 +38,25 @@
         <div class='holder'>
           <p class='control-next'>>></p>
           <p class='control-prev'><<</p>
-          <ul class='content-holder'>
+          <ul class='js-content-holder content-holder'>
             {{#each slidesTemp}}
-            <li>
+            <li data-number='{{@index}}'>
               <div>
                 <img src='{{img}}'>
-                {{#if comment}}
-                <span class='comment'>{{comment}}</span>
+                {{#if com}}
+                <span class='comment'>{{com}}</span>
                 {{/if}}
               </div>
             </li>
             {{/each}}
           </ul>
-          <div class='nav'>
+          <div class='nav js-nav'>
             {{#each slidesTemp}}
-            <span rel='{{@index}}'></span>
+            <span data-number='{{@index}}'></span>
             {{/each}}
           </div>
         </div>
       </div>
     </script>
-    <div class='input-form'>
-      <label for='arrayURL'>
-        <p>Вставьте ваш массив ссылок</p>
-      </label>
-      <form>
-        <textarea cols='50' id='arrayURL' rows='10'></textarea>
-      </form>
-      <input name='button' type='submit' value='Сохранить'>
-    </div>
   </body>
 </html>

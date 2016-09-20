@@ -33,7 +33,7 @@
           %p.control-prev <<
           %ul.js-content-holder.content-holder
             {{#each slidesTemp}}
-            %li{:number => "{{@index}}"}
+            %li{:"data-number" => "{{@index}}"}
               %div
                 %img{:src=>"{{img}}"}
                 {{#if com}}
@@ -42,5 +42,5 @@
             {{/each}}
           .nav.js-nav
             {{#each slidesTemp}}
-            %span{:number => "{{@index}}"}
+            %span{:"data-number" => "{{@index}}"}
             {{/each}}
