@@ -31,7 +31,7 @@ var Slider = function(arraySlides) {
     function _startSlider() {
         clearInterval(autoSlider);
         autoSlider = setInterval(function () {
-            sliderControl._moveSlide(1);
+            _moveSlide(1);
         }, 3000);
     };
     function _enterWidth() {
