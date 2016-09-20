@@ -42,12 +42,12 @@ var Preview = function() {
             });
             //console.log(urlArray);
             return urlArray;
-        }
+        };
     function _extractValues(slides, comments) {
         slides.forEach(function(item, i, slides) {
             arraySlides[i] = {img: slides[i], com: comments[i]};
         });
-    }
+    };
     function _deleteContent() {
         /*
          $(this) потому что parent() применяется к объекту Jquery,
@@ -55,15 +55,15 @@ var Preview = function() {
          */
         arrayOfImages.splice($(this).parent().index(), 1);
         $this.render();
-    }
+    };
     function _saveContent() {
-        $('.comment').each(function (i) {
+        $('.comment').each(function(i) {
             arrayOfComments[i] = $('.comment')[i].value;
         });
         $previewBlock.hide();
         _extractValues(arrayOfImages, arrayOfComments);
         sendValues(arraySlides);
-    }
+    };
     this.init = function(){
         arrayOfImages = urlArray = _arrayInit();
         $('.input-form').hide();

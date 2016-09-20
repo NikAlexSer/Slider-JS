@@ -2,15 +2,15 @@ function sendValues(arraySlides) {
     var slider = new Slider(arraySlides);
     slider.init();
     slider.render();
-}
+};
 function main() {
-    $('.input-form input[name="button"]').click( function() {
+    $('.input-form input[name="button"]').click(function() {
         var preview = new Preview();
         preview.init();
         preview.render();
     });
 }
-$(document).ready(function () {
+$(document).ready(function() {
     main();
 });
 
