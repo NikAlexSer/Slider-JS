@@ -28,23 +28,6 @@ var Slider = function(arraySlides) {
             }
         };
     }()); //модуль
-    this.init = function() {
-        buildSlider.sd_templateInit();
-    };
-    this.render = function() {
-        buildSlider.sd_templateInsertData(arraySlides);
-        buildSlider.sd_templateBuild();
-        $next = $('.control-next');
-        $prev =  $('.control-prev');
-        $slide = $('.js-content-holder li');
-        $holder = $('.js-content-holder');
-        $bullets = $('.js-nav span');
-        $('.js-nav span:first-child').addClass('on');
-        $holder.addClass('animated');
-        _enterWidth();
-        _eventsCheck();
-        _startSlider();
-    };
     function _startSlider() {
         clearInterval(autoSlider);
         autoSlider = setInterval(function () {
@@ -100,5 +83,22 @@ var Slider = function(arraySlides) {
             clearInterval(autoSlider);
             _moveSlide(1);
         });
+    };
+    this.init = function() {
+        buildSlider.sd_templateInit();
+    };
+    this.render = function() {
+        buildSlider.sd_templateInsertData(arraySlides);
+        buildSlider.sd_templateBuild();
+        $next = $('.control-next');
+        $prev =  $('.control-prev');
+        $slide = $('.js-content-holder li');
+        $holder = $('.js-content-holder');
+        $bullets = $('.js-nav span');
+        $('.js-nav span:first-child').addClass('on');
+        $holder.addClass('animated');
+        _enterWidth();
+        _eventsCheck();
+        _startSlider();
     };
 };
