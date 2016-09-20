@@ -10,35 +10,37 @@
     %script{:src => "./js/preview.js", :type => "application/javascript"}
     %script{:src => "handlebars-v4.0.5.js", :type => "application/javascript"}
   %body
-    %script{:id => "preview-template", :type => "text/x-handlebars-template"}
-      .js-slider-preview.slider-preview
-        {{#each urls}}
-        %div
-          %img{:src =>"{{this}}"}
-          %span Comment PLZ!
-          %input.comment{:type=>"text", :size=>"40"}
-          %input{:name => "button", :type => "submit", :value => "Удалить"}
-        {{/each}}
-        %input{:name => "button", :type => "submit", :value => "Сохранить"}
-
-    %script{:id => "slider-template", :type => "text/x-handlebars-template"}
-      .slider
-        .holder
-          %p.control-next >>
-          %p.control-prev <<
-          %ul.content-holder
-            {{#each slidesTemp}}
-            %li
-              %div
-                %img{:src=>"{{img}}"}
-                {{#if comment}}
-                %span.comment {{comment}}
-                {{/if}}
-            {{/each}}
-
     .input-form
       %label{:for=>"arrayURL"}
         %p Вставьте ваш массив ссылок
       %form
         %textarea{:id=>"arrayURL", :rows=>"10", :cols=>"50"}
       %input{:name=>"button", :type=>"submit", :value=>"Сохранить"}
+    %script{:id => "preview-template", :type => "text/x-handlebars-template"}
+      .js-slider-preview.slider-preview
+        {{#each urls}}
+        %div
+          %img{:src =>"{{this}}"}
+          %span Comment PLZ!
+          %input.comment{:type=>"text", :size=>"40", :value=>"{{@index}}"}
+          %input{:name => "button", :type => "submit", :value => "Удалить"}
+        {{/each}}
+        %input{:name => "button", :type => "submit", :value => "Сохранить"}
+    %script{:id => "slider-template", :type => "text/x-handlebars-template"}
+      .slider
+        .holder
+          %p.control-next >>
+          %p.control-prev <<
+          %ul.js-content-holder.content-holder
+            {{#each slidesTemp}}
+            %li{:number => "{{@index}}"}
+              %div
+                %img{:src=>"{{img}}"}
+                {{#if com}}
+                %span.comment {{com}}
+                {{/if}}
+            {{/each}}
+          .nav.js-nav
+            {{#each slidesTemp}}
+            %span{:number => "{{@index}}"}
+            {{/each}}
