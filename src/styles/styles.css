@@ -40,7 +40,7 @@
   width: 500px;
   height: 80px;
   position: absolute;
-  bottom: 0px;
+  top: 0px;
   color: #fff;
   background: #2a2a2a;
   opacity: 0.4;
@@ -86,7 +86,26 @@
   right: 0;
   border-radius: 2px 0 0 2px; }
 
-.content-holder {
+.nav {
+  position: absolute;
+  left: 25%;
+  bottom: 20px; }
+  .nav span {
+    opacity: 0.9;
+    background: #fff;
+    margin: 0 8px 0 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    display: block;
+    float: left;
+    box-shadow: 0 1px 2px #000; }
+  .nav .on {
+    background: #2e9419; }
+
+.animated, .nav span {
   -webkit-transition: all 0.3s cubic-bezier(1, 0.01, 0.32, 1);
   -moz-transition: all 0.3s cubic-bezier(1, 0.01, 0.32, 1);
   -o-transition: all 0.3s cubic-bezier(1, 0.01, 0.32, 1);
