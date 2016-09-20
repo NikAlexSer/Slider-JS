@@ -12,7 +12,6 @@ var Preview = function() {
             pv_templateInsertData: function(urlArray) {
                 context = {urls: urlArray};
                 htmlPreview = template(context);
-                console.log(context);
             },
             pv_templateBuild: function() {
                 $('body').append(htmlPreview);
@@ -67,7 +66,6 @@ var Preview = function() {
     }
     this.init = function(){
         arrayOfImages = urlArray = _arrayInit();
-        console.log(urlArray);
         $('.input-form').hide();
         buildPreview.pv_templateInit();
     };

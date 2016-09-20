@@ -1,105 +1,99 @@
 var Slider = function(arraySlides) {
-    var buildSlider = (function() {
+    var pos = -1,
+        index,
+        totalSlides,
+        autoSlider,
+        sliderWidth;
+    var buildSlider = (function () {
         var sourceSlides,
             templateSlides,
             contextSlides,
             htmlSlides;
         return {
-            sd_templateInit: function() {
-                sourceSlides   = $("#slider-template").html();
+            sd_templateInit: function () {
+                sourceSlides = $("#slider-template").html();
                 templateSlides = Handlebars.compile(sourceSlides);
             },
-            sd_templateInsertData: function(arraySlides) {
+            sd_templateInsertData: function (arraySlides) {
                 contextSlides = {slidesTemp: arraySlides};
                 htmlSlides = templateSlides(contextSlides);
             },
-            sd_templateBuild: function() {
+            sd_templateBuild: function () {
                 $('body').append(htmlSlides);
             }
         };
     }()); //модуль
-    this.init = function() {
+    this.init = function () {
         buildSlider.sd_templateInit();
     };
-    this.render = function() {
+    this.render = function () {
         buildSlider.sd_templateInsertData(arraySlides);
         buildSlider.sd_templateBuild();
         sliderControl._enterWidth();
-        var autoSlider = setInterval(function() {
-            sliderControl._moveSlide(1);
-        }, 1000);
-        $('.control-next').on('click', (function(){
-            sliderControl._moveSlide(1);
-        }));
-        $('.control-prev').on('click', (function(){
-            sliderControl._moveSlide();
-        }));
+
+        $('.js-nav span:first-child').addClass("on");
+        $('.js-content-holder').addClass('animated');
+        sliderControl._eventsCheck();
+        sliderControl._start();
     };
-    var sliderControl = (function() {
-        var pos = 0,
-            totalSlides,
-            sliderWidth;
+    var sliderControl = (function () {
         return {
+            _start: function () {
+                clearInterval(autoSlider);
+                autoSlider = setInterval(function () {
+                    sliderControl._moveSlide(1);
+                }, 3000);
+            },
             _enterWidth: function () {
-                totalSlides = $('.content-holder li').length;
-                sliderWidth = $('.slider li img').width();
-                $('.content-holder').css({width: sliderWidth * totalSlides});
-                console.log( $('.content-holder').width());
-                console.log($('.content-holder li').length);
-            }, 
-            _moveSlide: function(direction) {
-                if (direction == 1) {
+                totalSlides = $('.js-content-holder li').length;
+                sliderWidth = $('.js-content-holder img').width();
+                $('.js-content-holder').css({width: sliderWidth * totalSlides});
+            },
+            _moveSlide: function (direction) {
+                $('.on').removeClass('on');
+                if (direction === 1) {
                     pos++;
-                    if (pos == totalSlides) {
+                    if (pos === totalSlides) {
                         pos = 0;
                     }
-                    $('.content-holder').css({left: -(sliderWidth * pos)});
-                    
+                    $('.js-content-holder').css({left: -(sliderWidth*(pos))});
+                    index = +$('.js-content-holder li').eq(pos).attr('number');
+                    $('.js-nav span').eq(index).addClass('on');
                 }
                 else {
                     pos--;
-                    if (pos == -1) {
+                    if (pos === -1){
                         pos = totalSlides - 1;
                     }
-                    $('.content-holder').css({left: -(sliderWidth * pos)});
+                    $('.js-content-holder').css({left: -(sliderWidth*(pos))});
+                    index = +$('.js-content-holder li').eq(pos).attr('number');
+                    $('.js-nav span').eq(index).addClass('on');
                 }
+            },
+            _eventsCheck: function () {
+                $('.control-next').on('click', (function () {
+                    sliderControl._moveSlide(1);
+                }));
+                $('.control-prev').on('click', (function () {
+                    sliderControl._moveSlide();
+                }));
+                $('.js-content-holder li')
+                    .add($('.control-prev'))
+                    .add($('.control-next'))
+                    .add($('.js-nav span')).on('mouseenter', function () {
+                    clearInterval(autoSlider);
+                });
+                $('.js-content-holder li')
+                    .add($('.control-prev'))
+                    .add($('.control-next')).on('mouseleave', function () {
+                        sliderControl._start();
+                });
+                $('.js-nav span').on('click', function () {
+                    pos = $(this).index() - 1;
+                    clearInterval(autoSlider);
+                    sliderControl._moveSlide(1);
+                });
             }
         };
     }()); //модуль
-
-/*
-        //for each slide
-        $.each($('#slider-wrap ul li'), function() {
-            //set its color
-            var c = $(this).attr("data-color");
-            $(this).css("background",c);
-
-            //create a pagination
-            var li = document.createElement('li');
-            $('#pagination-wrap ul').append(li);
-        });
-
-        //counter
-        countSlides();
-
-        //pagination
-        pagination();
-
-        //hide/show controls/btns when hover
-        //pause automatic slide when hover
-        $('#slider-wrap').hover(
-            function(){ $(this).addClass('active'); clearInterval(autoSlider); },
-            function(){ $(this).removeClass('active'); autoSlider = setInterval(slideRight, 3000); }
-        );
-    /************************
-     //*> OPTIONAL SETTINGS
-     ************************/
-/*    function countSlides(){
-        $('#counter').html(pos+1 + ' / ' + totalSlides);
-    }
-
-    function pagination(){
-        $('#pagination-wrap ul li').removeClass('active');
-        $('#pagination-wrap ul li:eq('+pos+')').addClass('active');
-    }*/
 };
