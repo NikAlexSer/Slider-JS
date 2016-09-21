@@ -32,7 +32,7 @@ var Slider = function(arraySlides) {
         clearInterval(autoSlider);
         autoSlider = setInterval(function () {
             _moveSlide(1);
-        }, 3000);
+        }, 1000);
     };
     function _enterWidth() {
         totalSlides =  $slide.length;
@@ -59,6 +59,7 @@ var Slider = function(arraySlides) {
             index = +$slide.eq(pos).data('number');
             $bullets.eq(index).addClass('on');
         }
+        _startSlider();
     };
     function _eventsCheck() {
         $next.on('click', (function() {
