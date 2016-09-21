@@ -29,15 +29,23 @@ var Slider = function(arraySlides) {
             }
         };
     }()); //модуль
+    
+    function _prepareAnimation() {
+        $next = $('.control-next');
+        $prev =  $('.control-prev');
+        $slide = $('.js-content-holder li');
+        $holder = $('.js-content-holder');
+        $bullets = $('.js-nav span');
+        $('.js-nav span:first-child').addClass('on');
+        $holder.addClass('animated');
+        totalSlides =  $slide.length;
+        slideWidth = $('.js-content-holder img').width();
+        $holder.css({width: slideWidth * totalSlides});
+    };
     function _start() {
         autoSlider = setInterval(function () {
             _move(1);
         }, duration);
-    };
-    function _enterWidth() {
-        totalSlides =  $slide.length;
-        slideWidth = $('.js-content-holder img').width();
-        $holder.css({width: slideWidth * totalSlides});
     };
     function _move(direction) {
         $('.on').removeClass('on');
@@ -90,14 +98,7 @@ var Slider = function(arraySlides) {
     this.render = function() {
         buildSlider.sd_templateInsertData(arraySlides);
         buildSlider.sd_templateBuild();
-        $next = $('.control-next');
-        $prev =  $('.control-prev');
-        $slide = $('.js-content-holder li');
-        $holder = $('.js-content-holder');
-        $bullets = $('.js-nav span');
-        $('.js-nav span:first-child').addClass('on');
-        $holder.addClass('animated');
-        _enterWidth();
+        _prepareAnimation();
         _addEvents();
         _start();
     };

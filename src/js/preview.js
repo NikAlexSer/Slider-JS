@@ -64,6 +64,13 @@ var Preview = function() {
         _extractValues(arrayOfImages, arrayOfComments);
         sendValues(arraySlides);
     };
+    function _preparePreview() {
+        $previewBlock = $('.js-slider-preview');
+        $buttonDel =  $('.js-slider-preview input[value="Удалить"]');
+        $buttonSave = $('.js-slider-preview input[value="Сохранить"]');
+        $buttonDel.on("click", _deleteContent);
+        $buttonSave.on("click", _saveContent);
+    };
     this.init = function(){
         arrayOfImages = urlArray = _arrayInit();
         $('.input-form').hide();
@@ -73,10 +80,6 @@ var Preview = function() {
         $('.js-slider-preview').remove(); //удаление старых/пустых превьюх перед рендером
         buildPreview.pv_templateInsertData(arrayOfImages);
         buildPreview.pv_templateBuild();
-        $previewBlock = $('.js-slider-preview');
-        $buttonDel =  $('.js-slider-preview input[value="Удалить"]');
-        $buttonSave = $('.js-slider-preview input[value="Сохранить"]');
-        $buttonDel.on("click", _deleteContent);
-        $buttonSave.on("click", _saveContent);
+        _preparePreview();
     };
 };
