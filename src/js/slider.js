@@ -3,7 +3,8 @@ var Slider = function(arraySlides) {
         index,
         totalSlides,
         autoSlider,
-        sliderWidth,
+        slideWidth,
+        duration = 1000,
         $next,
         $prev,
         $slide,
@@ -28,45 +29,43 @@ var Slider = function(arraySlides) {
             }
         };
     }()); //модуль
-    function _startSlider() {
-        clearInterval(autoSlider);
+    function _start() {
         autoSlider = setInterval(function () {
-            _moveSlide(1);
-        }, 1000);
+            _move(1);
+        }, duration);
     };
     function _enterWidth() {
         totalSlides =  $slide.length;
-        sliderWidth = $('.js-content-holder img').width();
-        $holder.css({width: sliderWidth * totalSlides});
+        slideWidth = $('.js-content-holder img').width();
+        $holder.css({width: slideWidth * totalSlides});
     };
-    function _moveSlide(direction) {
+    function _move(direction) {
         $('.on').removeClass('on');
         if (direction === 1) {
             pos++;
             if (pos === totalSlides) {
                 pos = 0;
             }
-            $holder.css({left: -(sliderWidth*(pos))});
+            $holder.css({left: -(slideWidth*(pos))});
             index = +$slide.eq(pos).data('number');
-            $('.js-nav span').eq(index).addClass('on');
+            $bullets.eq(index).addClass('on');
         }
         else {
             pos--;
             if (pos === -1){
                 pos = totalSlides - 1;
             }
-            $holder.css({left: -(sliderWidth*(pos))});
+            $holder.css({left: -(slideWidth*(pos))});
             index = +$slide.eq(pos).data('number');
             $bullets.eq(index).addClass('on');
         }
-        _startSlider();
     };
-    function _eventsCheck() {
+    function _addEvents() {
         $next.on('click', (function() {
-            _moveSlide(1);
+            _move(1);
         }));
         $prev.on('click', (function() {
-            _moveSlide();
+            _move();
         }));
         $slide
             .add($prev)
@@ -77,12 +76,12 @@ var Slider = function(arraySlides) {
         $slide
             .add($prev)
             .add($next).on('mouseleave', function() {
-            _startSlider();
+            _start();
         });
         $bullets.on('click', function() {
             pos = $(this).index() - 1;
             clearInterval(autoSlider);
-            _moveSlide(1);
+            _move(1);
         });
     };
     this.init = function() {
@@ -99,7 +98,7 @@ var Slider = function(arraySlides) {
         $('.js-nav span:first-child').addClass('on');
         $holder.addClass('animated');
         _enterWidth();
-        _eventsCheck();
-        _startSlider();
+        _addEvents();
+        _start();
     };
 };
