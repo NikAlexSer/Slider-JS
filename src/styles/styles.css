@@ -105,7 +105,7 @@
   .nav .on {
     background: #2e9419; }
 
-.animated, .nav span {
+.animated {
   -webkit-transition: all 0.3s cubic-bezier(1, 0.01, 0.32, 1);
   -moz-transition: all 0.3s cubic-bezier(1, 0.01, 0.32, 1);
   -o-transition: all 0.3s cubic-bezier(1, 0.01, 0.32, 1);
