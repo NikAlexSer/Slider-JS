@@ -9,27 +9,24 @@ var Slider = function(arraySlides) {
     $prev,
     $slide,
     $bullets,
-    $holder;
-  var buildSlider = (function() {
-    var sourceSlides,
-      templateSlides,
-      contextSlides,
-      htmlSlides;
-    return {
-      sd_templateInit: function() {
-        sourceSlides = $("#slider-template").html();
-        templateSlides = Handlebars.compile(sourceSlides);
-      },
-      sd_templateInsertData: function (arraySlides) {
-        contextSlides = {slidesTemp: arraySlides};
-        htmlSlides = templateSlides(contextSlides);
-      },
-      sd_templateBuild: function() {
-        $('body').append(htmlSlides);
-      }
-    };
-  }()); //модуль
-    
+    $holder,
+    sourceSlides,
+    templateSlides,
+    contextSlides,
+    htmlSlides;
+  
+  function _templateInit() {
+    sourceSlides = $("#slider-template").html();
+    templateSlides = Handlebars.compile(sourceSlides);
+  }
+  function _templateInsertData(arraySlides) {
+    contextSlides = {slidesTemp: arraySlides};
+    htmlSlides = templateSlides(contextSlides);
+  }
+  function _templateBuild() {
+    $('body').append(htmlSlides);
+  }
+  
   function _prepareAnimation() {
     $next = $('.control-next');
     $prev =  $('.control-prev');
@@ -55,7 +52,7 @@ var Slider = function(arraySlides) {
         pos = 0;
       }
       $holder.css({left: -(slideWidth*(pos))});
-      index = +$slide.eq(pos).data('number');
+      index = parseInt($slide.eq(pos).data('number'));
       $bullets.eq(index).addClass('on');
     }
     else {
@@ -93,11 +90,11 @@ var Slider = function(arraySlides) {
     });
   };
   this.init = function() {
-    buildSlider.sd_templateInit();
+    _templateInit();
   };
   this.render = function() {
-    buildSlider.sd_templateInsertData(arraySlides);
-    buildSlider.sd_templateBuild();
+    _templateInsertData(arraySlides);
+    _templateBuild();
     _prepareAnimation();
     _addEvents();
     _start();

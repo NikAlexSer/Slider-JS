@@ -1,31 +1,29 @@
 var Preview = function() {
-  var buildPreview = (function() {
-    var source,
-      template,
-      context,
-      htmlPreview;
-    return {
-      pv_templateInit: function() {
-        source = $("#preview-template").html();
-        template = Handlebars.compile(source);
-      },
-      pv_templateInsertData: function(urlArray) {
-        context = {urls: urlArray};
-        htmlPreview = template(context);
-      },
-      pv_templateBuild: function() {
-        $('body').append(htmlPreview);
-      }
-    };
-  }()), //модуль
-    urlArray = [],
+  var urlArray = [],
     arrayOfImages = [],
     arrayOfComments = [],
     arraySlides = [],
     $this = this,
     $previewBlock,
     $buttonDel,
-    $buttonSave;
+    $buttonSave,
+    source,
+    template,
+    context,
+    htmlPreview;
+    
+  function _templateInit() {
+    source = $("#preview-template").html();
+    template = Handlebars.compile(source);
+  };
+  function _templateInsertData(urlArray) {
+    context = {urls: urlArray};
+    htmlPreview = template(context);
+  };
+  function _templateBuild() {
+    $('body').append(htmlPreview);
+  };
+  
   function _formationArray() {
     var urlArray = $('#arrayURL').val().split(',');
     urlArray.forEach(function (item, i, urlArray) {
@@ -65,12 +63,12 @@ var Preview = function() {
   this.init = function(){
     arrayOfImages = urlArray = _formationArray();
     $('.input-form').hide();
-    buildPreview.pv_templateInit();
+    _templateInit();
   };
   this.render = function() {
     $('.js-slider-preview').remove(); //удаление старых/пустых превьюх перед рендером
-    buildPreview.pv_templateInsertData(arrayOfImages);
-    buildPreview.pv_templateBuild();
+    _templateInsertData(arrayOfImages);
+    _templateBuild();
     _preparePreview();
   };
 };
