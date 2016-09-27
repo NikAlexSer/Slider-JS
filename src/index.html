@@ -35,26 +35,24 @@
     </script>
     <script id='slider-template' type='text/x-handlebars-template'>
       <div class='slider'>
-        <div class='holder'>
-          <p class='control-next'>>></p>
-          <p class='control-prev'><<</p>
-          <ul class='js-content-holder content-holder'>
-            {{#each slidesTemp}}
-            <li data-number='{{@index}}'>
-              <div>
-                <img src='{{img}}'>
-                {{#if com}}
-                <span class='comment'>{{com}}</span>
-                {{/if}}
-              </div>
-            </li>
-            {{/each}}
-          </ul>
-          <div class='nav js-nav'>
-            {{#each slidesTemp}}
-            <span data-number='{{@index}}'></span>
-            {{/each}}
-          </div>
+        <p class='control-next'>>></p>
+        <p class='control-prev'><<</p>
+        <ul class='js-content-holder content-holder'>
+          {{#each slidesTemp}}
+          <li data-number='{{@index}}'>
+            <div>
+              <img src='{{img}}'>
+              {{#if com}}
+              <span class='comment'>{{com}}</span>
+              {{/if}}
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+        <div class='nav js-nav'>
+          {{#each slidesTemp}}
+          <span data-number='{{@index}}'></span>
+          {{/each}}
         </div>
       </div>
     </script>

@@ -14,21 +14,20 @@ $slide_comment_height: 80px
     width: 120px
 
 .slider
-  .holder
+  position: relative
+  margin: 20px auto 0 auto
+  border-radius: 4px
+  overflow: hidden
+  width: $slide_width
+  .content-holder
+    cursor: default
     position: relative
-    margin: 20px auto 0 auto
-    border-radius: 4px
-    overflow: hidden
-    width: $slide_width
-    .content-holder
-      cursor: default
-      position: relative
-      margin: 0
-      padding: 0
-      list-style: none
+    margin: 0
+    padding: 0
+    list-style: none
+    height: $slide_height
+    div
       height: $slide_height
-      div
-        height: $slide_height
   li
     position: relative
     display: block

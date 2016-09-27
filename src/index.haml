@@ -28,19 +28,18 @@
         %input{:name => "button", :type => "submit", :value => "Сохранить"}
     %script{:id => "slider-template", :type => "text/x-handlebars-template"}
       .slider
-        .holder
-          %p.control-next >>
-          %p.control-prev <<
-          %ul.js-content-holder.content-holder
-            {{#each slidesTemp}}
-            %li{:"data-number" => "{{@index}}"}
-              %div
-                %img{:src=>"{{img}}"}
-                {{#if com}}
-                %span.comment {{com}}
-                {{/if}}
-            {{/each}}
-          .nav.js-nav
-            {{#each slidesTemp}}
-            %span{:"data-number" => "{{@index}}"}
-            {{/each}}
+        %p.control-next >>
+        %p.control-prev <<
+        %ul.js-content-holder.content-holder
+          {{#each slidesTemp}}
+          %li{:"data-number" => "{{@index}}"}
+            %div
+              %img{:src=>"{{img}}"}
+              {{#if com}}
+              %span.comment {{com}}
+              {{/if}}
+          {{/each}}
+        .nav.js-nav
+          {{#each slidesTemp}}
+          %span{:"data-number" => "{{@index}}"}
+          {{/each}}

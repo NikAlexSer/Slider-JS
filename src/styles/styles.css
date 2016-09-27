@@ -1,62 +1,62 @@
 .slider-preview img {
   width: 120px; }
 
-.slider .holder {
+.slider {
   position: relative;
   margin: 20px auto 0 auto;
   border-radius: 4px;
   overflow: hidden;
   width: 500px; }
-  .slider .holder .content-holder {
+  .slider .content-holder {
     cursor: default;
     position: relative;
     margin: 0;
     padding: 0;
     list-style: none;
     height: 368px; }
-    .slider .holder .content-holder div {
+    .slider .content-holder div {
       height: 368px; }
-.slider li {
-  position: relative;
-  display: block;
-  float: left;
-  margin: 0;
-  padding: 0;
-  width: 500px;
-  height: 368px;
-  background: #ccc;
-  text-align: center;
-  line-height: 300px; }
-.slider img {
-  width: 500px;
-  height: 368px; }
-.slider .comment {
-  cursor: default;
-  font-family: "Open Sans";
-  font-size: 14pt;
-  padding: 0;
-  margin: 0;
-  display: block;
-  width: 500px;
-  height: 80px;
-  position: absolute;
-  top: 0px;
-  color: #fff;
-  background: #2a2a2a;
-  opacity: 0.4;
-  -webkit-transition: all 0.7s ease;
-  -moz-transition: all 0.7s ease;
-  -o-transition: all 0.7s ease;
-  transition: all 0.7s ease;
-  line-height: 80px;
-  text-align: center;
-  vertical-align: middle; }
-  .slider .comment:hover {
-    opacity: 1;
+  .slider li {
+    position: relative;
+    display: block;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 500px;
+    height: 368px;
+    background: #ccc;
+    text-align: center;
+    line-height: 300px; }
+  .slider img {
+    width: 500px;
+    height: 368px; }
+  .slider .comment {
+    cursor: default;
+    font-family: "Open Sans";
+    font-size: 14pt;
+    padding: 0;
+    margin: 0;
+    display: block;
+    width: 500px;
+    height: 80px;
+    position: absolute;
+    top: 0px;
+    color: #fff;
+    background: #2a2a2a;
+    opacity: 0.4;
     -webkit-transition: all 0.7s ease;
     -moz-transition: all 0.7s ease;
     -o-transition: all 0.7s ease;
-    transition: all 0.7s ease; }
+    transition: all 0.7s ease;
+    line-height: 80px;
+    text-align: center;
+    vertical-align: middle; }
+    .slider .comment:hover {
+      opacity: 1;
+      -webkit-transition: all 0.7s ease;
+      -moz-transition: all 0.7s ease;
+      -o-transition: all 0.7s ease;
+      transition: all 0.7s ease; }
 
 .control-prev,
 .control-next {
