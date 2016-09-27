@@ -1,13 +1,13 @@
 var Slider = function(arraySlides) {
-  var index,
+  var index = 0,
     totalSlides,
-    autoSlider,
+    _interval,
     slideWidth,
     position = 0 ,
     duration = 1000,
     $next,
     $prev,
-    $slide,
+    $slides,
     $bullets,
     $holder,
     $slider,
@@ -31,41 +31,64 @@ var Slider = function(arraySlides) {
   function _prepareAnimation() {
     $next = $('.control-next');
     $prev =  $('.control-prev');
-    $slide = $('.js-content-holder li');
+    $slides = $('.js-content-holder li');
     $slider = $('.slider');
     $holder = $('.js-content-holder');
     $bullets = $('.js-nav span');
     $('.js-nav span:first-child').addClass('on');
-    totalSlides =  $slide.length;
+    totalSlides =  $slides.length;
     slideWidth = $('.js-content-holder img').width();
-    $holder.css({width: slideWidth * totalSlides});
-    $holder.addClass('animated');
+    $slides.first().clone().appendTo($holder);
+    $slides.last().clone().prependTo($holder);
+    position = -slideWidth;
+    $holder.css({width: slideWidth * (totalSlides + 2),
+      'transform':'translateX('+(position)+'px)'});
+    
   };
 
   function _addEvents() {
     $next.on('click', (function() {
-      _move(-1);
+      _slide(-1);
     }));
     $prev.on('click', (function() {
-      _move(1);
+      _slide(1);
     }));
-    $slider.on('mouseenter', function() {
-      clearInterval(autoSlider);
+    $slider
+      .on('mouseenter', function() {
+        clearInterval(_interval);
+      })
+      .on('mouseleave', function() {
+        _settingInterval();
     });
-    $slider.on('mouseleave', function() {
-      _start();
-    });
+    
   };
-  function _start() {
-    autoSlider = setInterval(function () {
-      _move(-1);
+  function _settingInterval() {
+    _interval = setInterval(function () {
+      _slide(-1);
     }, duration);
   };
-  function _move(direction) {
+  function _slide(direction) {
     $('.on').removeClass('on');
+    $holder.addClass('animated');
     position = position + direction * slideWidth;  // -1 right, 1 left
-    $holder.css({'transform':'translateX('+(position)+'px)'});
-    index = parseInt($slide.eq(Math.abs(Math.round(position/slideWidth))).data('number'));
+    $holder.css({'transform': 'translateX(' + (position) + 'px)'});
+    index = parseInt($slides.eq(Math.abs(Math.round((position + slideWidth) / slideWidth)))
+      .data('number'));
+    console.log(index);
+    console.log(position);
+    if (isNaN(index)) {
+      /*
+       Был вариант со сравнением с самим собой, но индекс всегда число.
+       НаН берется от выхода расчетов индекса за пределы возможных индексов
+       */
+      //$('.on').removeClass('on');
+      index = 0;
+      $bullets.eq(index).addClass('on');
+      $holder.removeClass('animated');
+      position = -slideWidth;
+      $holder.css({'transform':'translateX('+(position)+'px)'});
+      console.log('Ahtung', position);
+    }
     $bullets.eq(index).addClass('on');
   };
   this.init = function() {
@@ -76,6 +99,6 @@ var Slider = function(arraySlides) {
     _templateBuild();
     _prepareAnimation();
     _addEvents();
-    _start();
+    _settingInterval();
   };
 };

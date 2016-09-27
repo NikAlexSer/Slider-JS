@@ -29,7 +29,6 @@ var Preview = function() {
     urlArray.forEach(function (item, i, urlArray) {
       urlArray[i] = urlArray[i].replace(/["\n \u005B\u005D]/g, '');
     });
-    //console.log(urlArray);
     return urlArray;
   };
   function _extractValues(slides, comments) {
@@ -38,10 +37,10 @@ var Preview = function() {
     });
   };
   function _deleteContent() {
-        /*
-         $(this) потому что parent() применяется к объекту Jquery,
-         а $(this) дает такой объект в контексте нажимаемой кнопки
-         */
+    /*
+      $(this) потому что parent() применяется к объекту Jquery,
+      а $(this) дает такой объект в контексте нажимаемой кнопки
+    */
     arrayOfImages.splice($(this).parent().index(), 1);
     $this.render();
   };
