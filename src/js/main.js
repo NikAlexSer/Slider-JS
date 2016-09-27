@@ -1,17 +1,17 @@
 function sendValues(arraySlides) {
-    var slider = new Slider(arraySlides);
-    slider.init();
-    slider.render();
+  var slider = new Slider(arraySlides);
+  slider.init();
+  slider.render();
 };
 function main() {
-    $('.input-form input[name="button"]').click(function() {
-        var preview = new Preview();
-        preview.init();
-        preview.render();
-    });
+  $('.input-form input[name="button"]').click(function() {
+    var preview = new Preview();
+    preview.init();
+    preview.render();
+  });
 }
 $(document).ready(function() {
-    main();
+  main();
 });
 
 /*
