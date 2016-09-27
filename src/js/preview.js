@@ -26,19 +26,10 @@ var Preview = function() {
     $previewBlock,
     $buttonDel,
     $buttonSave;
-  function _arrayInit() {
-            /*
-             Добавил еще два реплейса для полной чистоты урлов.
-             Регулярное выражение для исключения прерывания
-             при первом нахождении символа в элементе
-             */
+  function _formationArray() {
     var urlArray = $('#arrayURL').val().split(',');
     urlArray.forEach(function (item, i, urlArray) {
-      urlArray[i] = urlArray[i].replace(/"/g, '');
-      urlArray[i] = urlArray[i].replace(/\n/g, '');
-      urlArray[i] = urlArray[i].replace(/ /g, '');
-      urlArray[i] = urlArray[i].replace('\u005B', '');
-      urlArray[i] = urlArray[i].replace('\u005D', '');
+      urlArray[i] = urlArray[i].replace(/["\n \u005B\u005D]/g, '');
     });
     //console.log(urlArray);
     return urlArray;
@@ -72,7 +63,7 @@ var Preview = function() {
     $buttonSave.on("click", _saveContent);
   };
   this.init = function(){
-    arrayOfImages = urlArray = _arrayInit();
+    arrayOfImages = urlArray = _formationArray();
     $('.input-form').hide();
     buildPreview.pv_templateInit();
   };
