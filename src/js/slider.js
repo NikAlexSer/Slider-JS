@@ -68,6 +68,7 @@ var Slider = function(arraySlides) {
       _slide(-1);
     }, duration);
   };
+  //Attention! Много костылей и голвнокода
   function _checkEnd() {
     $holder.removeClass('animated');
     $('.on').removeClass('on');
@@ -80,25 +81,34 @@ var Slider = function(arraySlides) {
     console.log($holder.attr('class'));
   };
   function _slide(direction) {
-    if(isNaN(index)) {_checkEnd();}
-    else {
-    console.log($holder.attr('class'));
+    if(index === totalSlides || index === -1) {_checkEnd();}
     $('.on').removeClass('on');
     $holder.addClass('animated');
-    position = position + direction * slideWidth;  // -1 right, 1 left
+    position = position + direction * slideWidth; // -1 right, 1 left
     $holder.css({'transform': 'translateX(' + (position) + 'px)'});
     temp = index;
+    switch (direction){
+      case -1:
+        index++;
+        break;
+      case 1:
+        index--;
+        break;
+      default:
+        console.log('AHTUNG!!!');
+    }
+    //пока счетчиком
     /*
       Почему не просто какой нибудь счетчик?
       Такой подход позволяет учесть перемещение в обе стороны,
       благодаря привязке position к самим слайдам. 
       И нет необходимости следить за понижением/повышением переменной :)
     */
-    index = parseInt($slides.eq(Math.abs(Math.round((position + slideWidth) / slideWidth)))
-      .data('number'));
+   // index = parseInt($slides.eq(Math.abs(Math.round((position + slideWidth) / slideWidth)))
+    //  .data('number'));
     console.log(index);
     console.log(position);
-    if(isNaN(index)) {
+    if(index === totalSlides || index === 0) {
       console.log('lolololo');
       //position = position + direction * slideWidth;
       position = -slideWidth;
@@ -108,7 +118,6 @@ var Slider = function(arraySlides) {
     }
     else {
       $bullets.eq(index).addClass('on');
-    }
     }
   }
   this.init = function() {
