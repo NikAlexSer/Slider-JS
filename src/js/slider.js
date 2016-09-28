@@ -1,5 +1,6 @@
 var Slider = function(arraySlides) {
   var index = 0,
+    temp,
     totalSlides,
     _interval,
     slideWidth,
@@ -67,30 +68,49 @@ var Slider = function(arraySlides) {
       _slide(-1);
     }, duration);
   };
+  function _checkEnd() {
+    $holder.removeClass('animated');
+    $('.on').removeClass('on');
+    index = 0;
+    $bullets.eq(index).addClass('on');
+    console.log('ziga', position);
+    position = -slideWidth;
+    $holder.css({'transform':'translateX('+(position)+'px)'});
+    console.log('Ahtung', position);
+    console.log($holder.attr('class'));
+  };
   function _slide(direction) {
+    if(isNaN(index)) {_checkEnd();}
+    else {
+    console.log($holder.attr('class'));
     $('.on').removeClass('on');
     $holder.addClass('animated');
     position = position + direction * slideWidth;  // -1 right, 1 left
     $holder.css({'transform': 'translateX(' + (position) + 'px)'});
+    temp = index;
+    /*
+      Почему не просто какой нибудь счетчик?
+      Такой подход позволяет учесть перемещение в обе стороны,
+      благодаря привязке position к самим слайдам. 
+      И нет необходимости следить за понижением/повышением переменной :)
+    */
     index = parseInt($slides.eq(Math.abs(Math.round((position + slideWidth) / slideWidth)))
       .data('number'));
     console.log(index);
     console.log(position);
-    if (isNaN(index)) {
-      /*
-       Был вариант со сравнением с самим собой, но индекс всегда число.
-       НаН берется от выхода расчетов индекса за пределы возможных индексов
-       */
-      //$('.on').removeClass('on');
-      index = 0;
-      $bullets.eq(index).addClass('on');
-      $holder.removeClass('animated');
+    if(isNaN(index)) {
+      console.log('lolololo');
+      //position = position + direction * slideWidth;
       position = -slideWidth;
-      $holder.css({'transform':'translateX('+(position)+'px)'});
-      console.log('Ahtung', position);
+      console.log(position);
+      //$holder.css({'transform': 'translateX(' + (position) + 'px)'});
+      $bullets.eq(totalSlides - temp - 1).addClass('on');
     }
-    $bullets.eq(index).addClass('on');
-  };
+    else {
+      $bullets.eq(index).addClass('on');
+    }
+    }
+  }
   this.init = function() {
     _templateInit();
   };
