@@ -33,7 +33,7 @@ var Slider = function(arraySlides) {
     $next = $('.control-next');
     $prev =  $('.control-prev');
     $slides = $('.js-content-holder li');
-    $slider = $('.slider');
+    $slider = $('.js-slider');
     $holder = $('.js-content-holder');
     $bullets = $('.js-nav span');
     $('.js-nav span:first-child').addClass('on');
