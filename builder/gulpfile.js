@@ -44,7 +44,7 @@ gulp.task('js:build', function () {
       .pipe(sourcemaps.init()) //Инициализируем sourcemap
       .pipe(concat('main.js'))
       .pipe(uglify()) //Сожмем наш js
-      .pipe(sourcemaps.write()) //Пропишем карты
+      ///.pipe(sourcemaps.write()) //Пропишем карты
       .pipe(gulp.dest(path.build.js)); //Выплюнем готовый файл в build
 });
 
