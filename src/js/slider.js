@@ -1,10 +1,11 @@
 var Slider = function(arraySlides) {
-  var index = 0,
-    temp,
+  var index = 0, // counter
     totalSlides,
-    _interval,
+    _interval, // for setInterval
     slideWidth,
-    position = 0 ,
+    isAnimating = false,
+    firstItem,
+    lastItem,
     duration = 1000,
     $next,
     $prev,
@@ -16,7 +17,8 @@ var Slider = function(arraySlides) {
     templateSlides,
     contextSlides,
     htmlSlides;
-  
+
+  // Handlebars functions
   function _templateInit() {
     sourceSlides = $("#slider-template").html();
     templateSlides = Handlebars.compile(sourceSlides);
@@ -36,23 +38,20 @@ var Slider = function(arraySlides) {
     $slider = $('.js-slider');
     $holder = $('.js-content-holder');
     $bullets = $('.js-nav span');
-    $('.js-nav span:first-child').addClass('on');
-    totalSlides =  $slides.length;
+    $bullets.eq(index).addClass('on');
+    firstItem = $slides.first();
+    lastItem = $slides.last();
+    isAnimating = false;
+    totalSlides = temp = $slides.length;
     slideWidth = $('.js-content-holder img').width();
-    $slides.first().clone().appendTo($holder);
-    $slides.last().clone().prependTo($holder);
-    position = -slideWidth;
-    $holder.css({width: slideWidth * (totalSlides + 2),
-      'transform':'translateX('+(position)+'px)'});
-    
+    $holder.css({width: slideWidth * (totalSlides)});
   };
-
   function _addEvents() {
     $next.on('click', (function() {
-      _slide(-1);
+      _slide(1);
     }));
     $prev.on('click', (function() {
-      _slide(1);
+      _slide(-1);
     }));
     $slider
       .on('mouseenter', function() {
@@ -65,61 +64,49 @@ var Slider = function(arraySlides) {
   };
   function _settingInterval() {
     _interval = setInterval(function () {
-      _slide(-1);
+      _slide(1);
     }, duration);
   };
-  //Attention! Много костылей и голвнокода
-  function _checkEnd() {
-    $holder.removeClass('animated');
-    $('.on').removeClass('on');
-    index = 0;
-    $bullets.eq(index).addClass('on');
-    console.log('ziga', position);
-    position = -slideWidth;
-    $holder.css({'transform':'translateX('+(position)+'px)'});
-    console.log('Ahtung', position);
-    console.log($holder.attr('class'));
-  };
   function _slide(direction) {
-    if(index === totalSlides || index === -1) {_checkEnd();}
+    if (isAnimating) {
+      return;
+    }
     $('.on').removeClass('on');
-    $holder.addClass('animated');
-    position = position + direction * slideWidth; // -1 right, 1 left
-    $holder.css({'transform': 'translateX(' + (position) + 'px)'});
-    temp = index;
-    switch (direction){
+    isAnimating = true;
+    index += direction;
+    $bullets.eq(index).addClass('on');
+    console.log('Ahtung!', index);
+    switch (index) {
       case -1:
-        index++;
+        $bullets.eq(totalSlides - 1).addClass('on');
+        lastItem.prependTo($holder);
+        $holder.transition({x: (index + 2) * -slideWidth + 'px'}, 0);
+        $holder.transition({x: (index + 1) * -slideWidth + 'px'}, 300, 'easeInOutExpo', function () {
+          index = totalSlides - 1;
+          lastItem.appendTo($holder);
+          $holder.transition({x: index * -slideWidth + 'px'}, 0);
+          isAnimating = false;
+        });
         break;
-      case 1:
-        index--;
+      case totalSlides:
+        $bullets.eq(0).addClass('on');
+        firstItem.appendTo($holder);
+        $holder.transition({x: (index - 2) * -slideWidth + 'px'}, 0);
+        $holder.transition({x: (index - 1) * -slideWidth + 'px'}, 300, 'easeInOutExpo', function () {
+          index = 0;
+          firstItem.prependTo($holder);
+          $holder.transition({x: index * -slideWidth + 'px'}, 0);
+          isAnimating = false;
+        });
         break;
       default:
-        console.log('AHTUNG!!!');
+        //$holder.css({'transform': 'translateX(' + (index * -slideWidth) + 'px)', 'transition': 'all 0.3s cubic-bezier(1,.01,.32,1)' });
+        $holder.transition({x: index * -slideWidth + 'px'}, 300, 'easeInOutExpo', function () {
+          isAnimating = false;
+        });
+        break;
     }
-    //пока счетчиком
-    /*
-      Почему не просто какой нибудь счетчик?
-      Такой подход позволяет учесть перемещение в обе стороны,
-      благодаря привязке position к самим слайдам. 
-      И нет необходимости следить за понижением/повышением переменной :)
-    */
-   // index = parseInt($slides.eq(Math.abs(Math.round((position + slideWidth) / slideWidth)))
-    //  .data('number'));
-    console.log(index);
-    console.log(position);
-    if(index === totalSlides || index === 0) {
-      console.log('lolololo');
-      //position = position + direction * slideWidth;
-      position = -slideWidth;
-      console.log(position);
-      //$holder.css({'transform': 'translateX(' + (position) + 'px)'});
-      $bullets.eq(totalSlides - temp - 1).addClass('on');
-    }
-    else {
-      $bullets.eq(index).addClass('on');
-    }
-  }
+  };
   this.init = function() {
     _templateInit();
   };
