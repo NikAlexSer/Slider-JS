@@ -1,11 +1,13 @@
+var slider,
+  preview;
 function sendValues(arraySlides) {
-  var slider = new Slider(arraySlides);
+  slider = new Slider(arraySlides);
   slider.init();
   slider.render();
 };
 function main() {
   $('.input-form input[name="button"]').click(function() {
-    var preview = new Preview();
+    preview = new Preview();
     preview.init();
     preview.render();
   });

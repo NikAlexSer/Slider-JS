@@ -111,6 +111,10 @@ var Slider = function(arraySlides) {
     _templateInit();
   };
   this.render = function() {
+    //подстраховка от багов при многократном вызове рендера
+    clearInterval(_interval);
+    $('.js-slider').remove();
+    //
     _templateInsertData(arraySlides);
     _templateBuild();
     _prepareAnimation();
