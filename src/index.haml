@@ -5,6 +5,8 @@
     %title Slider Builder
     %link{:rel=>"stylesheet", :href=>"./styles/styles.css"}
     %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"}
+    %script{:src => "http://cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.9/jquery.transit.min.js"}
+    %script{:src => "./js/preview.js", :type => "application/javascript"}
     %script{:src => "./js/main.js", :type => "application/javascript"}
     %script{:src => "./js/slider.js", :type => "application/javascript"}
     %script{:src => "./js/preview.js", :type => "application/javascript"}
@@ -32,7 +34,7 @@
         %p.control-prev <<
         %ul.js-content-holder.content-holder
           {{#each slidesTemp}}
-          %li{:"data-number" => "{{@index}}"}
+          %li
             %div
               %img{:src=>"{{img}}"}
               {{#if com}}
