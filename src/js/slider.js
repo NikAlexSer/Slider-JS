@@ -87,7 +87,7 @@ var Slider = function(arraySlides) {
         $bullets.eq(totalSlides - 1).addClass('on');
         lastItem.prependTo($holder);
         $holder.transition({x: (index + 2) * -slideWidth + 'px'}, 0);
-        $holder.transition({x: (index + 1) * -slideWidth + 'px'}, 150, 'easeInOutExpo', function () {
+        $holder.transition({x: (index + 1) * -slideWidth + 'px'}, 300, 'easeInOutExpo', function () {
           index = totalSlides - 1;
           lastItem.appendTo($holder);
           $holder.transition({x: index * -slideWidth + 'px'}, 0);
@@ -98,7 +98,7 @@ var Slider = function(arraySlides) {
         $bullets.eq(0).addClass('on');
         firstItem.appendTo($holder);
         $holder.transition({x: (index - 2) * -slideWidth + 'px'}, 0);
-        $holder.transition({x: (index - 1) * -slideWidth + 'px'}, 150, 'easeInOutExpo', function () {
+        $holder.transition({x: (index - 1) * -slideWidth + 'px'}, 300, 'easeInOutExpo', function () {
           index = 0;
           firstItem.prependTo($holder);
           $holder.transition({x: index * -slideWidth + 'px'}, 0);
