@@ -3,7 +3,7 @@ var Preview = function() {
     arrayOfImages = [],
     arrayOfComments = [],
     arraySlides = [],
-    $this = this,
+    self = this,
     $previewBlock,
     $buttonDel,
     $buttonSave,
@@ -42,7 +42,7 @@ var Preview = function() {
       а $(this) дает такой объект в контексте нажимаемой кнопки
     */
     arrayOfImages.splice($(this).parent().index(), 1);
-    $this.render();
+    self.render();
   };
   function _saveContent() {
     $('.comment').each(function(i) {

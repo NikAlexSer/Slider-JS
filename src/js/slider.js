@@ -28,7 +28,7 @@ var Slider = function(arraySlides) {
     htmlSlides = templateSlides(contextSlides);
   }
   function _templateBuild() {
-    $('body').append(htmlSlides);
+    $('body').html(htmlSlides);
   }
   
   function _prepareAnimation() {
@@ -106,7 +106,8 @@ var Slider = function(arraySlides) {
         });
         break;
       default:
-        //$holder.css({'transform': 'translateX(' + (index * -slideWidth) + 'px)', 'transition': 'all 0.3s cubic-bezier(1,.01,.32,1)' });
+        //$holder.css({'transform': 'translateX(' + (index * -slideWidth) + 'px)',
+        // 'transition': 'all 0.3s cubic-bezier(1,.01,.32,1)' });
         $holder.transition({x: index * -slideWidth + 'px'}, 300, 'easeInOutExpo', function () {
           isAnimating = false;
         });
@@ -117,10 +118,6 @@ var Slider = function(arraySlides) {
     _templateInit();
   };
   this.render = function() {
-    //подстраховка от багов при многократном вызове рендера
-    clearInterval(_interval);
-    $('.js-slider').remove();
-    //
     _templateInsertData(arraySlides);
     _templateBuild();
     _prepareAnimation();

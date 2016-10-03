@@ -5,7 +5,7 @@ function sendValues(arraySlides) {
   slider.init();
   slider.render();
 };
-function main() {
+/*function main() {
   $('.input-form input[name="button"]').click(function() {
     preview = new Preview();
     preview.init();
@@ -14,6 +14,16 @@ function main() {
 }
 $(document).ready(function() {
   main();
+});*/
+
+
+$(document).ready(function() {
+  console.log('Ahtung');
+  $('.input-form input[name="button"]').click(function() {
+    preview = new Preview();
+    preview.init();
+    preview.render();
+  });
 });
 
 /*
