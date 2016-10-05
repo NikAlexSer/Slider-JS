@@ -17,19 +17,19 @@
         %p Вставьте ваш массив ссылок
       %form
         %textarea{:id=>"arrayURL", :rows=>"10", :cols=>"50"}
-      %input{:name=>"button", :type=>"submit", :value=>"Сохранить"}
-    %script{:id => "preview-template", :type => "text/x-handlebars-template"}
-      .js-slider-preview.slider-preview
+      %input.js-data{:name=>"button", :type=>"submit", :value=>"Сохранить"}
+    .slider-preview.js-slider-preview
+      %script{:id => "preview-template", :type => "text/x-handlebars-template"}
         {{#each urls}}
         %div
           %img{:src =>"{{this}}"}
           %span Comment PLZ!
           %input.comment{:type=>"text", :size=>"40", :value=>"{{@index}}"}
-          %input{:name => "button", :type => "submit", :value => "Удалить"}
+          %input.btnDel{:name => "button", :type => "submit", :value => "Удалить"}
         {{/each}}
-        %input{:name => "button", :type => "submit", :value => "Сохранить"}
-    %script{:id => "slider-template", :type => "text/x-handlebars-template"}
-      .slider.js-slider
+        %input.btnSave{:name => "button", :type => "submit", :value => "Сохранить"}
+    .slider.js-slider
+      %script{:id => "slider-template", :type => "text/x-handlebars-template"}
         %p.control-next >>
         %p.control-prev <<
         %ul.js-content-holder.content-holder
@@ -37,8 +37,8 @@
           %li
             %div
               %img{:src=>"{{img}}"}
-              {{#if com}}
-              %span.comment {{com}}
+              {{#if comments}}
+              %span.comment {{comments}}
               {{/if}}
           {{/each}}
         .nav.js-nav

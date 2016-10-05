@@ -20,23 +20,23 @@
       <form>
         <textarea cols='50' id='arrayURL' rows='10'></textarea>
       </form>
-      <input name='button' type='submit' value='Сохранить'>
+      <input class='js-data' name='button' type='submit' value='Сохранить'>
     </div>
-    <script id='preview-template' type='text/x-handlebars-template'>
-      <div class='js-slider-preview slider-preview'>
+    <div class='slider-preview js-slider-preview'>
+      <script id='preview-template' type='text/x-handlebars-template'>
         {{#each urls}}
         <div>
           <img src='{{this}}'>
           <span>Comment PLZ!</span>
           <input class='comment' size='40' type='text' value='{{@index}}'>
-          <input name='button' type='submit' value='Удалить'>
+          <input class='btnDel' name='button' type='submit' value='Удалить'>
         </div>
         {{/each}}
-        <input name='button' type='submit' value='Сохранить'>
-      </div>
-    </script>
-    <script id='slider-template' type='text/x-handlebars-template'>
-      <div class='slider js-slider'>
+        <input class='btnSave' name='button' type='submit' value='Сохранить'>
+      </script>
+    </div>
+    <div class='slider js-slider'>
+      <script id='slider-template' type='text/x-handlebars-template'>
         <p class='control-next'>>></p>
         <p class='control-prev'><<</p>
         <ul class='js-content-holder content-holder'>
@@ -44,8 +44,8 @@
           <li>
             <div>
               <img src='{{img}}'>
-              {{#if com}}
-              <span class='comment'>{{com}}</span>
+              {{#if comments}}
+              <span class='comment'>{{comments}}</span>
               {{/if}}
             </div>
           </li>
@@ -56,7 +56,7 @@
           <span data-number='{{@index}}'></span>
           {{/each}}
         </div>
-      </div>
-    </script>
+      </script>
+    </div>
   </body>
 </html>
