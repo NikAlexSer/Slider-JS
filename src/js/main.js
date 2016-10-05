@@ -1,29 +1,46 @@
-var slider,
-  preview;
-function sendValues(arraySlides) {
-  slider = new Slider(arraySlides);
-  slider.init();
-  slider.render();
+var Controller = {
+  data: [],
+  preview: {},
+  slider: {},
+
+  init: function () {
+    Controller._getData();
+  },
+
+  _getData: function () {
+    $('.input-form').on('click', '.js-data', function() {
+      Controller.data = Controller._prepareData();
+      Controller._createPreview();
+      $('.input-form').hide();
+    });
+  },
+
+  _prepareData: function () {
+    var urlArray = $('#arrayURL').val().split(',');
+    urlArray.forEach(function (item, i) {
+      urlArray[i] = item.replace(/["\n \u005B\u005D]/g, '');
+    });
+    return urlArray;
+  },
+
+  _createPreview: function () {
+    preview = new Preview(Controller.data);
+    preview.init();
+    preview.render();
+  },
+
+  _createSlider: function (data) {
+    $('.js-slider-preview').hide();
+    slider = new Slider(data);
+    slider.init();
+    slider.render();
+  }
 };
-/*function main() {
-  $('.input-form input[name="button"]').click(function() {
-    preview = new Preview();
-    preview.init();
-    preview.render();
-  });
-}
-$(document).ready(function() {
-  main();
-});*/
 
 
-$(document).ready(function() {
-  console.log('Ahtung');
-  $('.input-form input[name="button"]').click(function() {
-    preview = new Preview();
-    preview.init();
-    preview.render();
-  });
+
+$(function() {
+  Controller.init();
 });
 
 /*
@@ -40,3 +57,6 @@ $(document).ready(function() {
     "https://c1.staticflickr.com/3/2528/3751624573_08815f8950_z.jpg"
 ]
 */
+
+
+

@@ -1,73 +1,52 @@
-var Preview = function() {
-  var urlArray = [],
-    arrayOfImages = [],
-    arrayOfComments = [],
-    arraySlides = [],
-    self = this,
-    $previewBlock,
-    $buttonDel,
-    $buttonSave,
-    source,
-    template,
-    context,
-    htmlPreview;
-    
+var Preview = function(data) {
+  var
+      imgArr = [],
+      commentArr = [],
+      self = this,
+      _template;
+
+  // Handlebars functions
   function _templateInit() {
-    source = $("#preview-template").html();
-    template = Handlebars.compile(source);
-  };
-  function _templateInsertData(urlArray) {
-    context = {urls: urlArray};
-    htmlPreview = template(context);
-  };
-  function _templateBuild() {
-    $('body').append(htmlPreview);
-  };
-  
-  function _formationArray() {
-    var urlArray = $('#arrayURL').val().split(',');
-    urlArray.forEach(function (item, i, urlArray) {
-      urlArray[i] = urlArray[i].replace(/["\n \u005B\u005D]/g, '');
+    _template = Handlebars.compile( $('#preview-template').html() );
+  }
+  function _templateRender(urlArray) {
+    $('.js-slider-preview').html(_template({urls: urlArray}));
+  }
+
+
+  function _mergeValues(images, comments) {
+    var slideElemArr = [];
+    images.forEach(function(item, i) {
+      slideElemArr[i] = {img: item, comments: comments[i]};
     });
-    return urlArray;
+    return slideElemArr;
   };
-  function _extractValues(slides, comments) {
-    slides.forEach(function(item, i, slides) {
-      arraySlides[i] = {img: slides[i], com: comments[i]};
-    });
-  };
+
   function _deleteContent() {
-    /*
-      $(this) потому что parent() применяется к объекту Jquery,
-      а $(this) дает такой объект в контексте нажимаемой кнопки
-    */
-    arrayOfImages.splice($(this).parent().index(), 1);
+    imgArr.splice($(this).parent().index(), 1);
     self.render();
   };
+
   function _saveContent() {
-    $('.comment').each(function(i) {
-            arrayOfComments[i] = $('.comment')[i].value;
-        });
-    $previewBlock.hide();
-    _extractValues(arrayOfImages, arrayOfComments);
-    sendValues(arraySlides);
+    var $comment = $('.comment');
+    $comment.each(function(i) {
+      commentArr[i] = $comment.eq(i).val();
+    });
+    _sendArr();
   };
-  function _preparePreview() {
-    $previewBlock = $('.js-slider-preview');
-    $buttonDel =  $('.js-slider-preview input[value="Удалить"]');
-    $buttonSave = $('.js-slider-preview input[value="Сохранить"]');
-    $buttonDel.on("click", _deleteContent);
-    $buttonSave.on("click", _saveContent);
-  };
+
+  function _sendArr() {
+    Controller._createSlider(_mergeValues(imgArr, commentArr));
+  }
+
   this.init = function(){
-    arrayOfImages = urlArray = _formationArray();
-    $('.input-form').hide();
+    imgArr = data;
     _templateInit();
+    $('.js-slider-preview')
+        .on("click", '.btnDel', _deleteContent)
+        .on('click', '.btnSave', _saveContent);
   };
   this.render = function() {
-    $('.js-slider-preview').remove(); //удаление старых/пустых превьюх перед рендером
-    _templateInsertData(arrayOfImages);
-    _templateBuild();
-    _preparePreview();
+    _templateRender(imgArr);
   };
 };
