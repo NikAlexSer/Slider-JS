@@ -46,6 +46,7 @@ var Preview = function(data) {
         .on("click", '.btnDel', _deleteContent)
         .on('click', '.btnSave', _saveContent);
   };
+
   this.render = function() {
     _templateRender(imgArr);
   };
