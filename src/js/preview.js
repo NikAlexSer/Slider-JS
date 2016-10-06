@@ -36,7 +36,7 @@ var Preview = function(data) {
   };
 
   function _sendArr() {
-    Controller._createSlider(_mergeValues(imgArr, commentArr));
+    Controller.receiveDataPreview(_mergeValues(imgArr, commentArr));
   }
 
   this.init = function(){

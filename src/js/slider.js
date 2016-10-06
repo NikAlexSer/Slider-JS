@@ -13,7 +13,7 @@ var Slider = function(data) {
   };
 
   function _prepare() {
-    $('.js-content-holder').css({width: $('.js-content-holder img').width() * ($('.js-content-holder li').length + 2)});
+    $('.js-content-holder').css({width: $('.js-content-holder li').width() * ($('.js-content-holder li').length + 2)});
   };
 
   function _setInterval() {
@@ -24,10 +24,17 @@ var Slider = function(data) {
   };
 
   function _slide() {
+    $('.clone').remove();
+    $('li').eq(0).clone().addClass('clone').appendTo($('.js-content-holder'));
     $('.js-content-holder').css("transform", "translateX(-" + _index * 500 + "px) ").addClass('animated');
     _index++;
-    $('li').eq(_index).clone().appendTo($('.js-content-holder'));
-    //$('.animated').removeClass('animated')
+    if (_index > $('.js-content-holder li').length) {
+      $('li').eq(0).clone().addClass('clone').appendTo($('.js-content-holder'));
+      _index = 0;
+      $('.js-content-holder').css("transform", "translateX(-" + 0 + "px) ").removeClass('animated');
+      console.log('AHTUNG');
+    }
+
   }
 
   this.init = function() {
@@ -36,9 +43,7 @@ var Slider = function(data) {
 
   this.render = function() {
     _templateRender(data);
-    console.log('lol');
     _prepare();
-    console.log('ziga');
     _setInterval();
   };
 };

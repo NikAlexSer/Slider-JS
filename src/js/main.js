@@ -1,46 +1,47 @@
-var Controller = {
-  data: [],
-  preview: {},
-  slider: {},
+var Controller = (function() {
+  var
+      data = [],
+      preview = {},
+      slider = {};
 
-  init: function () {
-    Controller._getData();
-  },
-
-  _getData: function () {
-    $('.input-form').on('click', '.js-data', function() {
-      Controller.data = Controller._prepareData();
-      Controller._createPreview();
+  function  _getData() {
+    $('.input-form').on('click', '.js-data', function () {
+      data = _prepareData();
+      _createPreview();
       $('.input-form').hide();
     });
-  },
+  };
 
-  _prepareData: function () {
+  function _prepareData() {
     var urlArray = $('#arrayURL').val().split(',');
     urlArray.forEach(function (item, i) {
       urlArray[i] = item.replace(/["\n \u005B\u005D]/g, '');
     });
     return urlArray;
-  },
+  };
 
-  _createPreview: function () {
-    preview = new Preview(Controller.data);
+  function _createPreview() {
+    preview = new Preview(data);
     preview.init();
     preview.render();
-  },
+  };
 
-  _createSlider: function (data) {
+  function _createSlider(data) {
     $('.js-slider-preview').hide();
     slider = new Slider(data);
     slider.init();
     slider.render();
   }
-};
 
+  return {
+    init: function init() {_getData()},
+    receiveDataPreview: function (data) {_createSlider(data)}
+  };
+})();
 
 
 $(function() {
-  Controller.init();
+  Controller.init()
 });
 
 /*
