@@ -22,41 +22,39 @@
       </form>
       <input class='js-data' name='button' type='submit' value='Сохранить'>
     </div>
-    <div class='slider-preview js-slider-preview'>
-      <script id='preview-template' type='text/x-handlebars-template'>
-        {{#each urls}}
-        <div>
-          <img src='{{this}}'>
-          <span>Comment PLZ!</span>
-          <input class='comment' size='40' type='text' value='{{@index}}'>
-          <input class='btnDel' name='button' type='submit' value='Удалить'>
-        </div>
+    <div class='slider-preview js-slider-preview'></div>
+    <div class='slider js-slider'></div>
+    <script id='slider-template' type='text/x-handlebars-template'>
+      <p class='control-next'>>></p>
+      <p class='control-prev'><<</p>
+      <ul class='js-content-holder content-holder'>
+        {{#each slidesTemp}}
+        <li>
+          <div>
+            <img src='{{img}}'>
+            {{#if comments}}
+            <span class='comment'>{{comments}}</span>
+            {{/if}}
+          </div>
+        </li>
         {{/each}}
-        <input class='btnSave' name='button' type='submit' value='Сохранить'>
-      </script>
-    </div>
-    <div class='slider js-slider'>
-      <script id='slider-template' type='text/x-handlebars-template'>
-        <p class='control-next'>>></p>
-        <p class='control-prev'><<</p>
-        <ul class='js-content-holder content-holder'>
-          {{#each slidesTemp}}
-          <li>
-            <div>
-              <img src='{{img}}'>
-              {{#if comments}}
-              <span class='comment'>{{comments}}</span>
-              {{/if}}
-            </div>
-          </li>
-          {{/each}}
-        </ul>
         <div class='nav js-nav'>
           {{#each slidesTemp}}
           <span data-number='{{@index}}'></span>
           {{/each}}
         </div>
-      </script>
-    </div>
+      </ul>
+    </script>
+    <script id='preview-template' type='text/x-handlebars-template'>
+      {{#each urls}}
+      <div>
+        <img src='{{this}}'>
+        <span>Comment PLZ!</span>
+        <input class='comment' size='40' type='text' value='{{@index}}'>
+        <input class='btnDel' name='button' type='submit' value='Удалить'>
+      </div>
+      {{/each}}
+      <input class='btnSave' name='button' type='submit' value='Сохранить'>
+    </script>
   </body>
 </html>

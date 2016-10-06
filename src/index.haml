@@ -18,30 +18,33 @@
       %form
         %textarea{:id=>"arrayURL", :rows=>"10", :cols=>"50"}
       %input.js-data{:name=>"button", :type=>"submit", :value=>"Сохранить"}
+
     .slider-preview.js-slider-preview
-      %script{:id => "preview-template", :type => "text/x-handlebars-template"}
-        {{#each urls}}
-        %div
-          %img{:src =>"{{this}}"}
-          %span Comment PLZ!
-          %input.comment{:type=>"text", :size=>"40", :value=>"{{@index}}"}
-          %input.btnDel{:name => "button", :type => "submit", :value => "Удалить"}
-        {{/each}}
-        %input.btnSave{:name => "button", :type => "submit", :value => "Сохранить"}
     .slider.js-slider
-      %script{:id => "slider-template", :type => "text/x-handlebars-template"}
-        %p.control-next >>
-        %p.control-prev <<
-        %ul.js-content-holder.content-holder
-          {{#each slidesTemp}}
-          %li
-            %div
-              %img{:src=>"{{img}}"}
-              {{#if comments}}
-              %span.comment {{comments}}
-              {{/if}}
-          {{/each}}
+
+    %script{:id => "slider-template", :type => "text/x-handlebars-template"}
+      %p.control-next >>
+      %p.control-prev <<
+      %ul.js-content-holder.content-holder
+        {{#each slidesTemp}}
+        %li
+          %div
+            %img{:src=>"{{img}}"}
+            {{#if comments}}
+            %span.comment {{comments}}
+            {{/if}}
+        {{/each}}
         .nav.js-nav
           {{#each slidesTemp}}
           %span{:"data-number" => "{{@index}}"}
           {{/each}}
+
+    %script{:id => "preview-template", :type => "text/x-handlebars-template"}
+      {{#each urls}}
+      %div
+        %img{:src =>"{{this}}"}
+        %span Comment PLZ!
+        %input.comment{:type=>"text", :size=>"40", :value=>"{{@index}}"}
+        %input.btnDel{:name => "button", :type => "submit", :value => "Удалить"}
+      {{/each}}
+      %input.btnSave{:name => "button", :type => "submit", :value => "Сохранить"}
