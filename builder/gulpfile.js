@@ -11,6 +11,7 @@ var gulp = require('gulp'),
   sass = require('gulp-sass'),
   sourcemaps = require('gulp-sourcemaps'),
   concat = require('gulp-concat'),
+  livereload = require('gulp-livereload'),
   cssmin = require('gulp-minify-css');
 
 var path = {
@@ -71,6 +72,7 @@ gulp.task('build', [
 ]);
 
 gulp.task('watch', function(){
+  livereload.listen();
   watch([path.watch.html], function(event, cb) {
     gulp.start('html:build');
   });
@@ -83,7 +85,11 @@ gulp.task('watch', function(){
   watch([path.watch.vendor], function (event, cb) {
     gulp.start('vendor:build');
   });
+  watch([path.watch.html]).on('change', livereload.changed);
+  watch([path.watch.style]).on('change', livereload.changed);
+  watch([path.watch.js]).on('change', livereload.changed);
+  watch([path.watch.vendor]).on('change', livereload.changed);
 });
 
-// создаем задачку, которая будет выполняться по умолчанию
+
 gulp.task('default', ['build', 'watch']);
