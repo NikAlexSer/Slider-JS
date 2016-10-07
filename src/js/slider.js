@@ -18,12 +18,8 @@ Slider = function (data, options) {
   };
 
   function _prepare() {
-    var
-        $lastItem =  $('li').last(),
-        $firstItem = $('li').first();
-    $('.js-content-holder').css({width: $('.js-content-holder li').width() * ($('.js-content-holder li').length + 2), marginLeft: -500});
-    $firstItem.clone().addClass('clone').appendTo($('.js-content-holder'));
-    $lastItem.clone().addClass('clone').prependTo($('.js-content-holder'));
+    var $slide = $('.js-content-holder li');
+    $('.js-content-holder').css({width: $slide.width() * ($slide.length + 2)});
     $('.js-bullets').eq(0).addClass('active');
   };
 
@@ -37,6 +33,7 @@ Slider = function (data, options) {
     $('.js-bullets').removeClass('active').eq(_index).addClass('active');
   }
 
+
   function _translate(isAnimated) {
     if (isAnimated) {
       $('.js-content-holder').css("transform", "translateX(-" + _index * 500 + "px) ").addClass('animated');
@@ -47,26 +44,37 @@ Slider = function (data, options) {
       _changeBullet();
     }
   }
+
   /*
-  В текущем виде есть такие баги:
-  1) Первый и последний буллеты не переключаются при достижении клонов
-  2) Странная задержка в областик клонов
-  3) Снова ифы, снова копипаста, снова громоздко
-  4) Перелистывание при движение влево
+
+      В текущем виде есть такие баги/ммоменты идиотизма:
+      1) Первый и последний буллеты не переключаются при достижении клонов
+      2) Странная задержка в областик клонов
+      3) Снова ифы, снова копипаста, снова громоздко
+      4) Перелистывание при движение влево
+      5) Ужасно криво работает перелистывание
+      6) Я не знаю как обойтись без ифов и счета индекса :( - узнал, в процессе реализации
+
    */
+
   function _slide(direction) {
+    $('.clone').remove();
+    console.log('start', _index)
     _index += direction;
-    if (_index === $('.js-content-holder li').length - 1) {
+    if (_index === $('.js-content-holder li').length) {
+      $('li').first().clone().addClass('clone').appendTo($('.js-content-holder'));
       _index = 0;
      _translate(false);
     }
     else if (_index === -1) {
+      $('li').last().clone().addClass('clone').prependTo($('.js-content-holder'));
       _index = $('.js-content-holder li').length - 2;
      _translate(false);
     }
     else {
       _translate(true);
     }
+    console.log('end', _index)
   };
 
   function _init() {
@@ -88,7 +96,6 @@ Slider = function (data, options) {
         .on('mouseleave', function () {
           _setInterval()
         });
-
   };
 
   this.render = function () {
