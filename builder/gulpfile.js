@@ -72,7 +72,6 @@ gulp.task('build', [
 ]);
 
 gulp.task('watch', function(){
-  livereload.listen();
   watch([path.watch.html], function(event, cb) {
     gulp.start('html:build');
   });
@@ -89,6 +88,7 @@ gulp.task('watch', function(){
   watch([path.watch.style]).on('change', livereload.changed);
   watch([path.watch.js]).on('change', livereload.changed);
   watch([path.watch.vendor]).on('change', livereload.changed);
+  livereload.listen();
 });
 
 
