@@ -30,11 +30,11 @@
             {{#if comments}}
             %span.comment {{comments}}
             {{/if}}
-        {{/each}}
-        .nav.js-nav
-          {{#each slidesTemp}}
-          %span{:"data-number" => "{{@index}}"}
           {{/each}}
+      .nav
+        {{#each slidesTemp}}
+        %span.bullets.js-bullets{:"data-number" => "{{@index}}"}
+        {{/each}}
 
     %script{:id => "preview-template", :type => "text/x-handlebars-template"}
       {{#each urls}}
