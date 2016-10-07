@@ -33,14 +33,14 @@
             <span class='comment'>{{comments}}</span>
             {{/if}}
           </div>
-        </li>
-        {{/each}}
-        <div class='nav js-nav'>
-          {{#each slidesTemp}}
-          <span data-number='{{@index}}'></span>
           {{/each}}
-        </div>
+        </li>
       </ul>
+      <div class='nav'>
+        {{#each slidesTemp}}
+        <span class='bullets js-bullets' data-number='{{@index}}'></span>
+        {{/each}}
+      </div>
     </script>
     <script id='preview-template' type='text/x-handlebars-template'>
       {{#each urls}}
