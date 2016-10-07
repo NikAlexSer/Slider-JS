@@ -90,7 +90,7 @@
   position: absolute;
   left: 25%;
   bottom: 20px; }
-  .nav span {
+  .nav .bullets {
     opacity: 0.9;
     background: #fff;
     margin: 0 8px 0 0;
@@ -102,7 +102,7 @@
     display: block;
     float: left;
     box-shadow: 0 1px 2px #000; }
-  .nav .on {
+  .nav .active {
     background: #2e9419; }
 
 .animated {
