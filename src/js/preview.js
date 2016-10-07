@@ -1,9 +1,10 @@
 var Preview = function(data) {
   var
-      imgArr = [],
-      commentArr = [],
-      self = this,
+      _imgArr = [],
+      _commentArr = [],
+      _self = this,
       _template;
+
 
   // Инициализация при создании экземпляра класса
   _init();
@@ -18,32 +19,32 @@ var Preview = function(data) {
 
 
   function _mergeValues(images, comments) {
-    var slideElemArr = [];
+    var _slideElemArr = [];
     images.forEach(function(item, i) {
-      slideElemArr[i] = {img: item, comments: comments[i]};
+      _slideElemArr[i] = {img: item, comments: comments[i]};
     });
-    return slideElemArr;
+    return _slideElemArr;
   };
 
   function _deleteContent() {
-    imgArr.splice($(this).parent().index(), 1);
-    self.render();
+    _imgArr.splice($(this).parent().index(), 1);
+    _self.render();
   };
 
   function _saveContent() {
     var $comment = $('.comment');
     $comment.each(function(i) {
-      commentArr[i] = $comment.eq(i).val();
+      _commentArr[i] = $comment.eq(i).val();
     });
     _sendArr();
   };
 
   function _sendArr() {
-    Controller.receiveDataPreview(_mergeValues(imgArr, commentArr));
+    Controller.receiveDataPreview(_mergeValues(_imgArr, _commentArr));
   }
 
   function _init(){
-    imgArr = data;
+    _imgArr = data;
     _templateInit();
     $('.js-slider-preview')
         .on('click', '.btnDel', _deleteContent)
@@ -51,6 +52,6 @@ var Preview = function(data) {
   };
 
   this.render = function() {
-    _templateRender(imgArr);
+    _templateRender(_imgArr);
   };
 };
