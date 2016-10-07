@@ -35,12 +35,13 @@ Slider = function (data, options) {
 
 
   function _translate(isAnimated) {
+    var slideWidth = $('.js-content-holder li');
     if (isAnimated) {
-      $('.js-content-holder').css("transform", "translateX(-" + _index * 500 + "px) ").addClass('animated');
+      $('.js-content-holder').css("transform", "translateX(-" + _index * slideWidth + "px) ").addClass('animated');
       _changeBullet();
     }
     else {
-      $('.js-content-holder').css({"transform": "translateX(-" + _index * 500 +  "px) "}).removeClass('animated');
+      $('.js-content-holder').css({"transform": "translateX(-" + _index * slideWidth +  "px) "}).removeClass('animated');
       _changeBullet();
     }
   }
@@ -83,10 +84,10 @@ Slider = function (data, options) {
     _templateInit();
     $('.js-slider')
         .on('click', '.control-next', function () {
-          _slide(1);
+          _slide(1); // 1 вправо
         })
         .on('click', '.control-prev', function () {
-          _slide(-1);
+          _slide(-1); // -1 влево
         })
         .on('click', '.js-bullets', function () {
           _index = parseInt($(this).data('number')) + 1;
