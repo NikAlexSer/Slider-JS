@@ -37,21 +37,35 @@ Slider = function (data, options) {
     $('.js-bullets').removeClass('active').eq(_index).addClass('active');
   }
 
+  function _translate(isAnimated) {
+    if (isAnimated) {
+      $('.js-content-holder').css("transform", "translateX(-" + _index * 500 + "px) ").addClass('animated');
+      _changeBullet();
+    }
+    else {
+      $('.js-content-holder').css({"transform": "translateX(-" + _index * 500 +  "px) "}).removeClass('animated');
+      _changeBullet();
+    }
+  }
+  /*
+  В текущем виде есть такие баги:
+  1) Первый и последний буллеты не переключаются при достижении клонов
+  2) Странная задержка в областик клонов
+  3) Снова ифы, снова копипаста, снова громоздко
+  4) Перелистывание при движение влево
+   */
   function _slide(direction) {
     _index += direction;
     if (_index === $('.js-content-holder li').length - 1) {
       _index = 0;
-      $('.js-content-holder').css("transform", "translateX(-" + _index * 500 + "px) ").removeClass('animated');
-      _changeBullet();
+     _translate(false);
     }
     else if (_index === -1) {
       _index = $('.js-content-holder li').length - 2;
-      $('.js-content-holder').css("transform", "translateX(-"  + -(_index * 500) + "px) ").removeClass('animated');
-      _changeBullet();
+     _translate(false);
     }
     else {
-      $('.js-content-holder').css("transform", "translateX(" + -(_index * 500) + "px) ").addClass('animated');
-      _changeBullet();
+      _translate(true);
     }
   };
 
@@ -59,17 +73,22 @@ Slider = function (data, options) {
     _templateInit();
     $('.js-slider')
         .on('click', '.control-next', function () {
-          _slide(1)
+          _slide(1);
         })
         .on('click', '.control-prev', function () {
-          _slide(-1)
+          _slide(-1);
+        })
+        .on('click', '.js-bullets', function () {
+          _index = parseInt($(this).data('number')) + 1;
+          _slide(-1);
         })
         .on('mouseenter', function () {
           clearInterval(_interval)
         })
         .on('mouseleave', function () {
           _setInterval()
-        })
+        });
+
   };
 
   this.render = function () {
