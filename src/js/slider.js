@@ -3,7 +3,7 @@ Slider = function (data, options) {
   var
       _template,
       _interval,
-      _index = 0;
+      _index = 0; //в процессе избавления от этого
 
 
   // Инициализация при создании экземпляра класса
