@@ -37,7 +37,7 @@ Slider = function (data, options) {
   function _translate(isAnimated) {
     var slideWidth = $('.js-content-holder li');
     if (isAnimated) {
-      $('.js-content-holder').css("transform", "translateX(-" + _index * slideWidth + "px) ").addClass('animated');
+      $('.js-content-holder').css({"transform": "translateX(-" + _index * slideWidth + "px) "}).addClass('animated');
       _changeBullet();
     }
     else {
