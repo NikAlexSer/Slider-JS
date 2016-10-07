@@ -1,49 +1,80 @@
-var Slider = function(data) {
+var Slider;
+Slider = function (data, options) {
   var
       _template,
       _interval,
       _index = 0;
 
+
+  // Инициализация при создании экземпляра класса
+  _init();
+
   // Handlebars functions
   function _templateInit() {
-      _template = Handlebars.compile( $('#slider-template').html() );
+    _template = Handlebars.compile($('#slider-template').html());
   };
   function _templateRender(arraySlides) {
     $('.js-slider').html(_template({slidesTemp: arraySlides}));
   };
 
   function _prepare() {
-    $('.js-content-holder').css({width: $('.js-content-holder li').width() * ($('.js-content-holder li').length + 2)});
+    var
+        $lastItem =  $('li').last(),
+        $firstItem = $('li').first();
+    $('.js-content-holder').css({width: $('.js-content-holder li').width() * ($('.js-content-holder li').length + 2), marginLeft: -500});
+    $firstItem.clone().addClass('clone').appendTo($('.js-content-holder'));
+    $lastItem.clone().addClass('clone').prependTo($('.js-content-holder'));
+    $('.js-bullets').eq(0).addClass('active');
   };
 
   function _setInterval() {
-    var duration = 1000;
-    _interval = setInterval(function() {
-      _slide()
-}, duration)
-};
+    _interval = setInterval(function () {
+      _slide(1)
+    }, options.duration)
+  };
 
-function _slide() {
-  console.log('start', _index);
-  $('.clone').remove();
-  $('li').eq(0).clone().addClass('clone').appendTo($('.js-content-holder'));
-  $('.js-content-holder').css("transform", "translateX(-" + _index * 500 + "px) ").addClass('animated');
-  _index++;
-  console.log('end', _index);
-  if (_index > $('.js-content-holder li').length) {
-    $('.js-content-holder').css("transform", "translateX(-" + 0 + "px) ").removeClass('animated');
-    _index = 1;
-    console.log('AHTUNG');
+  function _changeBullet() {
+    $('.js-bullets').removeClass('active').eq(_index).addClass('active');
   }
-};
 
-this.init = function() {
-  _templateInit();
-};
+  function _slide(direction) {
+    _index += direction;
+    if (_index === $('.js-content-holder li').length - 1) {
+      _index = 0;
+      $('.js-content-holder').css("transform", "translateX(-" + _index * 500 + "px) ").removeClass('animated');
+      _changeBullet();
+    }
+    else if (_index === -1) {
+      _index = $('.js-content-holder li').length - 2;
+      $('.js-content-holder').css("transform", "translateX(-"  + -(_index * 500) + "px) ").removeClass('animated');
+      _changeBullet();
+    }
+    else {
+      $('.js-content-holder').css("transform", "translateX(" + -(_index * 500) + "px) ").addClass('animated');
+      _changeBullet();
+    }
+  };
 
-this.render = function() {
-  _templateRender(data);
-  _prepare();
-  _setInterval();
-};
+  function _init() {
+    _templateInit();
+    $('.js-slider')
+        .on('click', '.control-next', function () {
+          _slide(1)
+        })
+        .on('click', '.control-prev', function () {
+          _slide(-1)
+        })
+        .on('mouseenter', function () {
+          clearInterval(_interval)
+        })
+        .on('mouseleave', function () {
+          _setInterval()
+        })
+  };
+
+  this.render = function () {
+    _templateRender(data);
+    _prepare();
+    _setInterval();
+  };
 };

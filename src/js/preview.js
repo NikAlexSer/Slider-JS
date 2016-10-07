@@ -5,6 +5,9 @@ var Preview = function(data) {
       self = this,
       _template;
 
+  // Инициализация при создании экземпляра класса
+  _init();
+
   // Handlebars functions
   function _templateInit() {
     _template = Handlebars.compile( $('#preview-template').html() );
@@ -39,11 +42,11 @@ var Preview = function(data) {
     Controller.receiveDataPreview(_mergeValues(imgArr, commentArr));
   }
 
-  this.init = function(){
+  function _init(){
     imgArr = data;
     _templateInit();
     $('.js-slider-preview')
-        .on("click", '.btnDel', _deleteContent)
+        .on('click', '.btnDel', _deleteContent)
         .on('click', '.btnSave', _saveContent);
   };
 
