@@ -25,7 +25,7 @@ Slider = function (data, options) {
     $('.js-content-holder li').eq(0).addClass('active');
     $firstItem.clone().appendTo('.js-content-holder').addClass('clone');
     $lastItem.clone().prependTo('.js-content-holder').addClass('clone');
-    $('.js-content-holder').css({width: $slide.width() * ($slide.length + 2), marginLeft: -500});
+    $('.js-content-holder').css({width: $slide.width() * ($slide.length + 2), marginLeft: -options.slideWidth});
 
   };
 
@@ -49,6 +49,14 @@ Slider = function (data, options) {
         UPD: Все равно не знаю :(
 
    */
+
+  // Зачем такая функция? Чтобы не было копипасты и выглядело менее монструащзо
+  function _translate() {
+    $('.js-content-holder').css({"transform": "translateX(-"
+    + (($('.active').index() - 1) * options.slideWidth) + "px) "})
+      .addClass('animated')
+  }
+
   function _slide(direction) {
     console.log($('.active').index())
     if (direction === 1) {
@@ -60,12 +68,12 @@ Slider = function (data, options) {
       }
       else {
         $('.active').removeClass('active').next().addClass('active');
-        $('.js-content-holder').css({"transform": "translateX(-" + (($('.active').index() - 1) * 500) + "px) "}).addClass('animated')
+       _translate()
       }
     }
     else if (direction === -1) {
       $('.active').removeClass('active').prev().addClass('active');
-      $('.js-content-holder').css({"transform": "translateX(-" + (($('.active').index() - 1) * 500)  + "px) "}).addClass('animated')
+      _translate()
     }
     console.log($('.active').index())
   };

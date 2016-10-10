@@ -16,7 +16,8 @@ var Controller = (function() {
           "https://c2.staticflickr.com/2/1032/3175022066_57fce505be_z.jpg",
           "https://c1.staticflickr.com/3/2528/3751624573_08815f8950_z.jpg"
         ],
-        duration: 1000
+        duration: 1000,
+        slideWidth: 500
       };
 
   function  _getData() {
