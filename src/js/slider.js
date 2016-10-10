@@ -21,7 +21,8 @@ Slider = function (data, options) {
         $slide = $('.js-content-holder li'),
         $firstItem = $('.js-content-holder li').first(),
         $lastItem = $('.js-content-holder li').last();
-    $('.js-bullets').eq(0).addClass('active').add($('.js-content-holder li')).eq(0).addClass('active');
+    $('.js-bullets').eq(0).addClass('active');
+    $('.js-content-holder li').eq(0).addClass('active');
     $firstItem.clone().appendTo('.js-content-holder').addClass('clone');
     $lastItem.clone().prependTo('.js-content-holder').addClass('clone');
     $('.js-content-holder').css({width: $slide.width() * ($slide.length + 2), marginLeft: -500});
@@ -44,18 +45,27 @@ Slider = function (data, options) {
       5) Ужасно криво работает переход в начало/конец
       6) Я не знаю как обойтись без ифов и счета индекса :( - узнал, в процессе реализации.
         конкретнее - избавление от индекса и присвоение активному слайду класса, класс менять по некст()/прев()
-        Буллеты считать по .index()
+        Буллеты считать по .index() -
+        UPD: Все равно не знаю :(
 
    */
   function _slide(direction) {
+    console.log($('.active').index())
     if ($('.active').index() === $('.js-content-holder li').length - 1) {
-      $('.js-content-holder').css({"transform": "translateX(" + 0 +  "px) "}).removeClass('animated').add($('.active')).removeClass('active');
-      $('.js-content-holder li').eq(0).addClass('active');
+      $('.js-content-holder').css({"transform": "translateX(-" + 0 +  "px) "}).removeClass('animated')
+        .add($('.active')).removeClass('active');
+      $('.js-content-holder li').eq(1).addClass('active');
+      $('.js-bullets').eq(0).addClass('active');
     }
-    else {
+    else if (direction === 1){
       $('.active').removeClass('active').next().addClass('active');
-      $('.js-content-holder').css({"transform": "translateX(-" + (($('.active').index() - 1) * 500)  +  "px) "}).addClass('animated')
+      $('.js-content-holder').css({"transform": "translateX(-" + (($('.active').index() - 1) * 500)  + "px) "}).addClass('animated')
     }
+    else if (direction === -1) {
+      $('.active').removeClass('active').prev().addClass('active');
+      $('.js-content-holder').css({"transform": "translateX(-" + (($('.active').index() - 1) * 500)  + "px) "}).addClass('animated')
+    }
+    console.log($('.active').index())
   };
 
   function _init() {
@@ -65,7 +75,6 @@ Slider = function (data, options) {
           _slide(1); // 1 вправо
         })
         .on('click', '.control-prev', function () {
-          $('.active').removeClass('active').prev().addClass('active');
           _slide(-1); // -1 влево
         })
         .on('click', '.js-bullets', function () {
