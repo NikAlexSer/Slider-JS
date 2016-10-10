@@ -35,7 +35,7 @@ Slider = function (data, options) {
 
 
   function _translate(isAnimated) {
-    var slideWidth = $('.js-content-holder li');
+    var slideWidth = $('.js-content-holder li').width();
     if (isAnimated) {
       $('.js-content-holder').css({"transform": "translateX(-" + _index * slideWidth + "px) "}).addClass('animated');
       _changeBullet();
@@ -62,7 +62,6 @@ Slider = function (data, options) {
 
   function _slide(direction) {
     $('.clone').remove();
-    console.log('start', _index)
     _index += direction;
     if (_index === $('.js-content-holder li').length) {
       $('li').first().clone().addClass('clone').appendTo($('.js-content-holder'));
@@ -77,7 +76,6 @@ Slider = function (data, options) {
     else {
       _translate(true);
     }
-    console.log('end', _index)
   };
 
   function _init() {
