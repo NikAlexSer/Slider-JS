@@ -51,15 +51,17 @@ Slider = function (data, options) {
    */
   function _slide(direction) {
     console.log($('.active').index())
-    if ($('.active').index() === $('.js-content-holder li').length - 1) {
-      $('.js-content-holder').css({"transform": "translateX(-" + 0 +  "px) "}).removeClass('animated')
-        .add($('.active')).removeClass('active');
-      $('.js-content-holder li').eq(1).addClass('active');
-      $('.js-bullets').eq(0).addClass('active');
-    }
-    else if (direction === 1){
-      $('.active').removeClass('active').next().addClass('active');
-      $('.js-content-holder').css({"transform": "translateX(-" + (($('.active').index() - 1) * 500)  + "px) "}).addClass('animated')
+    if (direction === 1) {
+      if ($('.active').index() === $('.js-content-holder li').length - 1) {
+        $('.js-content-holder').css({"transform": "translateX(-" + 0 + "px) "}).removeClass('animated')
+          .add($('.active')).removeClass('active');
+        $('.js-content-holder li').eq(1).addClass('active');
+        $('.js-bullets').eq(0).addClass('active');
+      }
+      else {
+        $('.active').removeClass('active').next().addClass('active');
+        $('.js-content-holder').css({"transform": "translateX(-" + (($('.active').index() - 1) * 500) + "px) "}).addClass('animated')
+      }
     }
     else if (direction === -1) {
       $('.active').removeClass('active').prev().addClass('active');
@@ -78,7 +80,7 @@ Slider = function (data, options) {
           _slide(-1); // -1 влево
         })
         .on('click', '.js-bullets', function () {
-          _index = parseInt($(this).data('number')) + 1;
+
           _slide(-1);
         })
         .on('mouseenter', function () {
