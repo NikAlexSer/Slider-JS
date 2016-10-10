@@ -2,8 +2,7 @@ var Slider;
 Slider = function (data, options) {
   var
       _template,
-      _interval,
-      _index = 0; //в процессе избавления от этого
+      _interval;
 
 
   // Инициализация при создании экземпляра класса
@@ -18,9 +17,15 @@ Slider = function (data, options) {
   };
 
   function _prepare() {
-    var $slide = $('.js-content-holder li');
-    $('.js-content-holder').css({width: $slide.width() * ($slide.length + 2)});
-    $('.js-bullets').eq(0).addClass('active');
+    var
+        $slide = $('.js-content-holder li'),
+        $firstItem = $('.js-content-holder li').first(),
+        $lastItem = $('.js-content-holder li').last();
+    $('.js-bullets').eq(0).addClass('active').add($('.js-content-holder li')).eq(0).addClass('active');
+    $firstItem.clone().appendTo('.js-content-holder').addClass('clone');
+    $lastItem.clone().prependTo('.js-content-holder').addClass('clone');
+    $('.js-content-holder').css({width: $slide.width() * ($slide.length + 2), marginLeft: -500});
+
   };
 
   function _setInterval() {
@@ -28,23 +33,6 @@ Slider = function (data, options) {
       _slide(1)
     }, options.duration)
   };
-
-  function _changeBullet() {
-    $('.js-bullets').removeClass('active').eq(_index).addClass('active');
-  }
-
-
-  function _translate(isAnimated) {
-    var slideWidth = $('.js-content-holder li').width();
-    if (isAnimated) {
-      $('.js-content-holder').css({"transform": "translateX(-" + _index * slideWidth + "px) "}).addClass('animated');
-      _changeBullet();
-    }
-    else {
-      $('.js-content-holder').css({"transform": "translateX(-" + _index * slideWidth +  "px) "}).removeClass('animated');
-      _changeBullet();
-    }
-  }
 
   /*
 
@@ -59,22 +47,14 @@ Slider = function (data, options) {
         Буллеты считать по .index()
 
    */
-
   function _slide(direction) {
-    $('.clone').remove();
-    _index += direction;
-    if (_index === $('.js-content-holder li').length) {
-      $('li').first().clone().addClass('clone').appendTo($('.js-content-holder'));
-      _index = 0;
-     _translate(false);
-    }
-    else if (_index === -1) {
-      $('li').last().clone().addClass('clone').prependTo($('.js-content-holder'));
-      _index = $('.js-content-holder li').length - 2;
-     _translate(false);
+    if ($('.active').index() === $('.js-content-holder li').length - 1) {
+      $('.js-content-holder').css({"transform": "translateX(" + 0 +  "px) "}).removeClass('animated').add($('.active')).removeClass('active');
+      $('.js-content-holder li').eq(0).addClass('active');
     }
     else {
-      _translate(true);
+      $('.active').removeClass('active').next().addClass('active');
+      $('.js-content-holder').css({"transform": "translateX(-" + (($('.active').index() - 1) * 500)  +  "px) "}).addClass('animated')
     }
   };
 
@@ -85,6 +65,7 @@ Slider = function (data, options) {
           _slide(1); // 1 вправо
         })
         .on('click', '.control-prev', function () {
+          $('.active').removeClass('active').prev().addClass('active');
           _slide(-1); // -1 влево
         })
         .on('click', '.js-bullets', function () {
