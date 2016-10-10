@@ -19,10 +19,10 @@ Slider = function (data, options) {
   function _prepare() {
     var
         $slide = $('.js-content-holder li'),
-        $firstItem = $('.js-content-holder li').first(),
-        $lastItem = $('.js-content-holder li').last();
+        $firstItem = $slide.first(),
+        $lastItem = $slide.last();
     $('.js-bullets').eq(0).addClass('active');
-    $('.js-content-holder li').eq(0).addClass('active');
+    $slide.eq(0).addClass('active');
     $firstItem.clone().appendTo('.js-content-holder').addClass('clone');
     $lastItem.clone().prependTo('.js-content-holder').addClass('clone');
     $('.js-content-holder').css({width: $slide.width() * ($slide.length + 2), marginLeft: -options.slideWidth});
