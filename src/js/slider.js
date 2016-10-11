@@ -48,6 +48,8 @@ Slider = function (data, options) {
         Буллеты считать по .index() -
         UPD: Все равно не знаю :(
 
+        UPD 11.10: знаю примерное решение, подсказали
+
    */
 
   // Зачем такая функция? Чтобы не было копипасты и выглядело менее монструащзо
@@ -58,7 +60,6 @@ Slider = function (data, options) {
   }
 
   function _slide(direction) {
-    console.log($('.active').index())
     if (direction === 1) {
       if ($('.active').index() === $('.js-content-holder li').length - 1) {
         $('.js-content-holder').css({"transform": "translateX(-" + 0 + "px) "}).removeClass('animated')
@@ -75,7 +76,6 @@ Slider = function (data, options) {
       $('.active').removeClass('active').prev().addClass('active');
       _translate()
     }
-    console.log($('.active').index())
   };
 
   function _init() {
