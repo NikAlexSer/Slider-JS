@@ -19,12 +19,9 @@ Slider = function (data, options) {
   function _prepare() {
     var
         $slide = $('.js-content-holder li'),
-        $firstItem = $slide.first(),
-        $lastItem = $slide.last();
+        $firstItem = $slide.first();
     $('.js-bullets').eq(0).addClass('active');
-    $slide.eq(0).addClass('active');
-    $firstItem.clone().appendTo('.js-content-holder').addClass('clone');
-    $lastItem.clone().prependTo('.js-content-holder').addClass('clone');
+    $firstItem.addClass('active').clone().appendTo('.js-content-holder').addClass('clone');
     $('.js-content-holder').css({width: $slide.width() * ($slide.length + 2), marginLeft: -options.slideWidth});
 
   };
