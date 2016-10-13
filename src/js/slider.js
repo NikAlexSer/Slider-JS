@@ -22,7 +22,7 @@ Slider = function (data, options) {
         $firstItem = $slide.first();
     $('.js-bullets').eq(0).addClass('active');
     $firstItem.addClass('active').clone().appendTo('.js-content-holder').addClass('clone');
-    $('.js-content-holder').css({width: $slide.width() * ($slide.length + 2), marginLeft: -options.slideWidth});
+    $('.js-content-holder').css({width: $slide.width() * ($slide.length + 2)});
 
   };
 
@@ -52,7 +52,7 @@ Slider = function (data, options) {
   // Зачем такая функция? Чтобы не было копипасты и выглядело менее монструащзо
   function _translate() {
     $('.js-content-holder').css({"transform": "translateX(-"
-    + (($('.active').index() - 1) * options.slideWidth) + "px) "})
+    + (($('.active').index()) * options.slideWidth) + "px) "})
       .addClass('animated')
   }
 
@@ -61,7 +61,7 @@ Slider = function (data, options) {
       if ($('.active').index() === $('.js-content-holder li').length - 1) {
         $('.js-content-holder').css({"transform": "translateX(-" + 0 + "px) "}).removeClass('animated')
           .add($('.active')).removeClass('active');
-        $('.js-content-holder li').eq(1).addClass('active');
+        $('.js-content-holder li').eq(0).addClass('active');
         $('.js-bullets').eq(0).addClass('active');
       }
       else {
@@ -70,8 +70,18 @@ Slider = function (data, options) {
       }
     }
     else if (direction === -1) {
-      $('.active').removeClass('active').prev().addClass('active');
-      _translate()
+      if ($('.active').index() === 0) {
+        $('.js-content-holder').css({"transform": "translateX(-"
+        + ($('.js-content-holder li').last().index()) * options.slideWidth + "px) "})
+          .removeClass('animated')
+          .add($('.active')).removeClass('active');
+        $('.js-content-holder li').last().addClass('active');
+        $('.js-bullets').last().addClass('active');
+      }
+      else {
+        $('.active').removeClass('active').prev().addClass('active');
+        _translate()
+      }
     }
   };
 
